@@ -55,7 +55,7 @@ public class TasksActivity extends AppCompatActivity {
         tasksAdapter = new TaskAdapter(this, tasksList);
         tasksRecyclerView.setAdapter(tasksAdapter);
 
-        //use this to update tasks on screen in future
+        //use this to update tasks on screen in future.
         //tasksAdapter.updateTasks(tasksList);
     }
 
