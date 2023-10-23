@@ -11,7 +11,7 @@ import com.cs407.cs407mobileapp.R;
 
 import java.util.List;
 
-public class TaskAdapter extends RecyclerView.Adapter<TaskViewHolder> {
+public class TaskAdapter extends RecyclerView.Adapter<TaskInListViewHolder> {
 
     Context context;
     List<TaskObject> taskObjects;
@@ -23,15 +23,17 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskViewHolder> {
 
     @NonNull
     @Override
-    public TaskViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new TaskViewHolder(LayoutInflater.from(context).inflate(R.layout.task_layout, parent, false));
+    public TaskInListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new TaskInListViewHolder(LayoutInflater.from(context).inflate(R.layout.task_layout, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull TaskViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull TaskInListViewHolder holder, int position) {
         holder.title.setText(taskObjects.get(position).getTitle());
-        holder.date.setText(taskObjects.get(position).getDate());
         holder.checkbox.setChecked(taskObjects.get(position).isChecked());
+        holder.locationName.setText(taskObjects.get(position).getLocationName());
+        holder.startDate.setText(taskObjects.get(position).getStartDate());
+        holder.endDate.setText(taskObjects.get(position).getEndDate());
     }
 
     @Override
