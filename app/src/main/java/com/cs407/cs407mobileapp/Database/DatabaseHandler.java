@@ -27,9 +27,15 @@ public class DatabaseHandler {
     private static SQLiteDatabase sqLiteDatabase;
     private String currentUsername;
     public DatabaseHandler (Context context, String username){
-        SQLiteDatabase sqLiteDatabase = context.openOrCreateDatabase(DATABASE_NAME, Context.MODE_PRIVATE, null);
-        this.sqLiteDatabase = sqLiteDatabase;
+        if(sqLiteDatabase == null){
+            SQLiteDatabase sqLiteDatabase = context.openOrCreateDatabase(DATABASE_NAME, Context.MODE_PRIVATE, null);
+            this.sqLiteDatabase = sqLiteDatabase;
+        }
         this.currentUsername = username;
+    }
+
+    public void closeHandler(){
+        sqLiteDatabase.close();
     }
     private void createTableInDatabase(){
         sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " " +

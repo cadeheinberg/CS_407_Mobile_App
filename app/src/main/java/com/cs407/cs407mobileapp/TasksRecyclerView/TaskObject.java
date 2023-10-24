@@ -14,18 +14,10 @@ public class TaskObject {
     private String locationAddress;
     private String title;
     private String description;
-    private static List<TaskObject> tasksList;
     private static int nextId = 1;
 
     public TaskObject(Integer id, boolean checked, String username, String startDate, String endDate, String locationName, String locationAddress, String title, String description) {
-        if(id == null){
-            // Use null for adding a new Task
-            this.nextId = nextId + 1;
-            this.id = nextId;
-        }else{
-            // Used when reading from database
-            this.id = id;
-        }
+        this.id = id;
         this.checked = checked;
         this.username = username;
         this.startDate = startDate;
@@ -34,22 +26,6 @@ public class TaskObject {
         this.locationAddress = locationAddress;
         this.title = title;
         this.description = description;
-    }
-
-    public static void setNextId(){
-        for (TaskObject taskObject : tasksList){
-            if (taskObject.getId() > nextId){
-                nextId = taskObject.getId();
-            }
-        }
-    }
-
-    public static void setTasksList(ArrayList<TaskObject> setterTasksList) {
-        tasksList = setterTasksList;
-    }
-
-    public static List<TaskObject> getTasksList(){
-        return tasksList;
     }
 
     public int getId() {
@@ -58,6 +34,7 @@ public class TaskObject {
 
     public void setId(int id) {
         this.id = id;
+        TaskManager.modifiedTask(this);
     }
 
     public boolean isChecked() {
@@ -66,6 +43,7 @@ public class TaskObject {
 
     public void setChecked(boolean checked) {
         this.checked = checked;
+        TaskManager.modifiedTask(this);
     }
 
     public String getUsername() {
@@ -74,6 +52,7 @@ public class TaskObject {
 
     public void setUsername(String username) {
         this.username = username;
+        TaskManager.modifiedTask(this);
     }
 
     public String getStartDate() {
@@ -82,6 +61,7 @@ public class TaskObject {
 
     public void setStartDate(String startDate) {
         this.startDate = startDate;
+        TaskManager.modifiedTask(this);
     }
 
     public String getEndDate() {
@@ -90,6 +70,7 @@ public class TaskObject {
 
     public void setEndDate(String endDate) {
         this.endDate = endDate;
+        TaskManager.modifiedTask(this);
     }
 
     public String getLocationName() {
@@ -98,6 +79,7 @@ public class TaskObject {
 
     public void setLocationName(String locationName) {
         this.locationName = locationName;
+        TaskManager.modifiedTask(this);
     }
 
     public String getLocationAddress() {
@@ -106,6 +88,7 @@ public class TaskObject {
 
     public void setLocationAddress(String locationAddress) {
         this.locationAddress = locationAddress;
+        TaskManager.modifiedTask(this);
     }
 
     public String getTitle() {
@@ -114,6 +97,7 @@ public class TaskObject {
 
     public void setTitle(String title) {
         this.title = title;
+        TaskManager.modifiedTask(this);
     }
 
     public String getDescription() {
@@ -122,5 +106,6 @@ public class TaskObject {
 
     public void setDescription(String description) {
         this.description = description;
+        TaskManager.modifiedTask(this);
     }
 }
