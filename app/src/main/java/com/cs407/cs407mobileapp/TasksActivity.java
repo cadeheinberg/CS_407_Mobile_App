@@ -1,6 +1,7 @@
 package com.cs407.cs407mobileapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -11,15 +12,19 @@ import android.database.sqlite.SQLiteDatabase;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.cs407.cs407mobileapp.Database.DatabaseHandler;
 import com.cs407.cs407mobileapp.TasksRecyclerView.TaskAdapter;
+import com.cs407.cs407mobileapp.TasksRecyclerView.TaskInListViewHolder;
 import com.cs407.cs407mobileapp.TasksRecyclerView.TaskManager;
 import com.cs407.cs407mobileapp.TasksRecyclerView.TaskObject;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -67,7 +72,7 @@ public class TasksActivity extends AppCompatActivity {
         tasksRecyclerView.setAdapter(tasksAdapter);
     }
 
-    private void goToAddEditTaskActivity(int taskId){
+    public void goToAddEditTaskActivity(int taskId){
         Intent intentAddEditTask = new Intent(getApplicationContext(), AddEditTaskActivity.class);
         intentAddEditTask.putExtra("positionInList", taskId);
         startActivity(intentAddEditTask);
@@ -109,16 +114,5 @@ public class TasksActivity extends AppCompatActivity {
 //                locationAddress,
 //                title,
 //                description);
-
-//        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, tm.getTasksList());
-//        ListView taskListItem = findViewById(R.id.tasksRecylerViewToday);
-//        taskListItem.setAdapter(adapter);
-//
-//        taskListItem.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                goToAddEditTaskActivity(position);
-//            }
-//        });
 
 }

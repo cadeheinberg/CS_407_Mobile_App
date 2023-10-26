@@ -1,12 +1,12 @@
 package com.cs407.cs407mobileapp.TasksRecyclerView;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.cs407.cs407mobileapp.R;
 
 public class TaskInListViewHolder extends RecyclerView.ViewHolder {
@@ -24,4 +24,14 @@ public class TaskInListViewHolder extends RecyclerView.ViewHolder {
         startDate = itemView.findViewById(R.id.taskStartDateText);
         endDate = itemView.findViewById(R.id.taskEndDateText);
     }
+
+    //        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, TaskManager.getTasksList());
+//        ListView taskListItem = findViewById(R.id.tasksRecylerViewToday);
+//        taskListItem.setAdapter(adapter);
+//        taskListItem.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                goToAddEditTaskActivity(position);
+//            }
+//        });
 }
