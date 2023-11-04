@@ -4,6 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.ViewGroup;
 
 import com.cs407.cs407mobileapp.CameraActivity;
 import com.cs407.cs407mobileapp.GalleryActivity;
@@ -17,13 +20,13 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_base); // assuming your base layout is named activity_base
+        setContentView(R.layout.activity_base);
         bottomNav = findViewById(R.id.bottom_navigation);
 
         bottomNav.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
-
             if (itemId == R.id.nav_tasks) {
+                Log.i("Info", "Test");
                 if (!(this instanceof TasksActivity)) {
                     startActivity(new Intent(this, TasksActivity.class));
                 }
@@ -42,5 +45,17 @@ public abstract class BaseActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+
     }
+
+    @Override
+    public void setContentView(int layoutResID) {
+        super.setContentView(R.layout.activity_base);
+        LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+        ViewGroup contentView = findViewById(R.id.activity_content);
+        inflater.inflate(layoutResID, contentView, true);
+    }
+
+
 }
