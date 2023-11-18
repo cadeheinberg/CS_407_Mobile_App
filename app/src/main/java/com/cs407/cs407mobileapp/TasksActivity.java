@@ -13,6 +13,8 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -46,7 +48,8 @@ public class TasksActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tasks);
-        getSupportActionBar().hide();
+        //getSupportActionBar().hide();
+        getSupportActionBar().setTitle("Today");
 
         // Get username from shared preferences
         this.sharedPreferences = getSharedPreferences("cs407mobileapp", Context.MODE_PRIVATE);
@@ -77,6 +80,14 @@ public class TasksActivity extends AppCompatActivity {
         intentAddEditTask.putExtra("positionInList", taskId);
         startActivity(intentAddEditTask);
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.bottom_navigation_menu, menu);
+        return true;
+    }
+
     private void goToTasksActivity(){
         Intent intent = new Intent(this, TasksActivity.class);
         startActivity(intent);
