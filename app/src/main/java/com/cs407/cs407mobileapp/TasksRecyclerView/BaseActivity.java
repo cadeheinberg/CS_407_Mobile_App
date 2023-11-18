@@ -22,29 +22,29 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
         bottomNav = findViewById(R.id.bottom_navigation);
-
-        bottomNav.setOnItemSelectedListener(item -> {
-            int itemId = item.getItemId();
-            if (itemId == R.id.nav_tasks) {
-                Log.i("Info", "Test");
-                if (!(this instanceof TasksActivity)) {
-                    startActivity(new Intent(this, TasksActivity.class));
-                }
-                return true;
-            } else if (itemId == R.id.nav_camera) {
-                if (!(this instanceof CameraActivity)) {
-                    startActivity(new Intent(this, CameraActivity.class));
-                }
-                return true;
-            } else if (itemId == R.id.nav_gallery) {
-                if (!(this instanceof GalleryActivity)) {
-                    startActivity(new Intent(this, GalleryActivity.class));
-                }
-                return true;
-            } else {
-                return false;
-            }
-        });
+        // TODO: fix if statements
+//        bottomNav.setOnItemSelectedListener(item -> {
+//            int itemId = item.getItemId();
+//            if (itemId == R.id.nav_tasks) {
+//                Log.i("Info", "Test");
+//                if (!(this instanceof TasksActivity)) {
+//                    startActivity(new Intent(this, TasksActivity.class));
+//                }
+//                return true;
+//            } else if (itemId == R.id.nav_camera) {
+//                if (!(this instanceof CameraActivity)) {
+//                    startActivity(new Intent(this, CameraActivity.class));
+//                }
+//                return true;
+//            } else if (itemId == R.id.nav_gallery) {
+//                if (!(this instanceof GalleryActivity)) {
+//                    startActivity(new Intent(this, GalleryActivity.class));
+//                }
+//                return true;
+//            } else {
+//                return false;
+//            }
+//        });
 
 
     }

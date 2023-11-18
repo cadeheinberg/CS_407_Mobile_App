@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">cs407mobileapp</string>
+    <string name="app_name">ExecApp</string>
+    <string name="username_hint">Username</string>
+    <string name="password_hint">Password</string>
+    <string name="login">Login</string>
+    <string name="create_account">Create Account</string>
 </resources>

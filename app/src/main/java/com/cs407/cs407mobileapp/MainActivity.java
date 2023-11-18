@@ -16,9 +16,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
-
+    
     SharedPreferences sharedPreferences = null;
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,37 +27,37 @@ public class MainActivity extends AppCompatActivity {
         setButtonOnClickListeners();
         this.sharedPreferences = getSharedPreferences("cs407mobileapp", Context.MODE_PRIVATE);
     }
-
+    
     private void setButtonOnClickListeners() {
-        Button buttonLogin = (Button) findViewById(R.id.buttonLogin);
+        Button buttonLogin = (Button) findViewById(R.id.loginButton);
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText editTextUsername =(EditText) findViewById(R.id.editTextUsername);
+                EditText editTextUsername = (EditText) findViewById(R.id.loginUsername);
                 sharedPreferences.edit().putString("username", editTextUsername.getText().toString()).apply();
                 goToTasksActivity();
             }
         });
     }
-
-    private void goToTasksActivity(){
+    
+    private void goToTasksActivity() {
         Intent intent = new Intent(this, TasksActivity.class);
         startActivity(intent);
     }
-
-    private void goToCameraActivity(){
+    
+    private void goToCameraActivity() {
         Intent intent = new Intent(this, CameraActivity.class);
         startActivity(intent);
     }
-
-    private void goToGalleryActivity(){
+    
+    private void goToGalleryActivity() {
         Intent intent = new Intent(this, GalleryActivity.class);
         startActivity(intent);
     }
-
-    private void goToMainActivity(){
+    
+    private void goToMainActivity() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
-
+    
 }
