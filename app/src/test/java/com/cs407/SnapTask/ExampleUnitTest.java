@@ -1,4 +1,4 @@
-package com.cs407.cs407mobileapp;
+package com.cs407.SnapTask;
 
 import org.junit.Test;
 

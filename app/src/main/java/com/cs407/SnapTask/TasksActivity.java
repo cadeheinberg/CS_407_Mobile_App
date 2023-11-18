@@ -1,4 +1,4 @@
-package com.cs407.cs407mobileapp;
+package com.cs407.SnapTask;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
@@ -24,11 +24,11 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.cs407.cs407mobileapp.Database.DatabaseHandler;
-import com.cs407.cs407mobileapp.TasksRecyclerView.TaskAdapter;
-import com.cs407.cs407mobileapp.TasksRecyclerView.TaskInListViewHolder;
-import com.cs407.cs407mobileapp.TasksRecyclerView.TaskManager;
-import com.cs407.cs407mobileapp.TasksRecyclerView.TaskObject;
+import com.cs407.SnapTask.Database.DatabaseHandler;
+import com.cs407.SnapTask.TasksRecyclerView.TaskAdapter;
+import com.cs407.SnapTask.TasksRecyclerView.TaskInListViewHolder;
+import com.cs407.SnapTask.TasksRecyclerView.TaskManager;
+import com.cs407.SnapTask.TasksRecyclerView.TaskObject;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.DateFormat;
@@ -38,29 +38,29 @@ import java.util.Date;
 import java.util.List;
 
 public class TasksActivity extends AppCompatActivity {
-
+    
     SharedPreferences sharedPreferences;
-
+    
     private static RecyclerView tasksRecyclerView;
     private static TaskAdapter tasksAdapter;
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tasks);
         //getSupportActionBar().hide();
         getSupportActionBar().setTitle("Today");
-
+        
         // Get username from shared preferences
-        this.sharedPreferences = getSharedPreferences("cs407mobileapp", Context.MODE_PRIVATE);
+        this.sharedPreferences = getSharedPreferences("SnapTask", Context.MODE_PRIVATE);
         String foundUsername = this.sharedPreferences.getString("username", "");
-
-        if(TaskManager.isNull()){
+        
+        if (TaskManager.isNull()) {
             // Populate tasksList from database
             TaskManager.initializeManager(TasksActivity.this, this);
             TaskManager.readTasksFromDatabase(this, foundUsername);
         }
-
+        
         FloatingActionButton buttonAddTask = findViewById(R.id.tasksButtonNewTask);
         buttonAddTask.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,46 +68,46 @@ public class TasksActivity extends AppCompatActivity {
                 goToAddEditTaskActivity(-1);
             }
         });
-
+        
         tasksRecyclerView = findViewById(R.id.tasksRecylerViewToday);
         tasksRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         tasksAdapter = new TaskAdapter(this, TaskManager.getTasksList());
         tasksRecyclerView.setAdapter(tasksAdapter);
     }
-
-    public void goToAddEditTaskActivity(int taskId){
+    
+    public void goToAddEditTaskActivity(int taskId) {
         Intent intentAddEditTask = new Intent(getApplicationContext(), AddEditTaskActivity.class);
         intentAddEditTask.putExtra("positionInList", taskId);
         startActivity(intentAddEditTask);
     }
-
+    
     @Override
-    public boolean onCreateOptionsMenu(Menu menu){
+    public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.bottom_navigation_menu, menu);
         return true;
     }
-
-    private void goToTasksActivity(){
+    
+    private void goToTasksActivity() {
         Intent intent = new Intent(this, TasksActivity.class);
         startActivity(intent);
     }
-
-    private void goToCameraActivity(){
+    
+    private void goToCameraActivity() {
         Intent intent = new Intent(this, CameraActivity.class);
         startActivity(intent);
     }
-
-    private void goToGalleryActivity(){
+    
+    private void goToGalleryActivity() {
         Intent intent = new Intent(this, GalleryActivity.class);
         startActivity(intent);
     }
-
-    private void goToMainActivity(){
+    
+    private void goToMainActivity() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
-
+    
     //Creating a sample Task and adding it to the list
 //        DateFormat dateFormat = new SimpleDateFormat("HH:mm");
 //        String startStrDate = dateFormat.format(new Date());

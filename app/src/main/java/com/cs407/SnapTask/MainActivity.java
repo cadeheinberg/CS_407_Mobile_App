@@ -1,4 +1,4 @@
-package com.cs407.cs407mobileapp;
+package com.cs407.SnapTask;
 
 import static androidx.core.content.ContextCompat.startActivity;
 
@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         getSupportActionBar().setTitle("Login");
         setButtonOnClickListeners();
-        this.sharedPreferences = getSharedPreferences("cs407mobileapp", Context.MODE_PRIVATE);
+        this.sharedPreferences = getSharedPreferences("SnapTask", Context.MODE_PRIVATE);
     }
     
     private void setButtonOnClickListeners() {

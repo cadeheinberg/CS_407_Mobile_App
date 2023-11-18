@@ -1,4 +1,4 @@
-package com.cs407.cs407mobileapp;
+package com.cs407.SnapTask;
 
 import android.content.Context;
 
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.cs407.cs407mobileapp", appContext.getPackageName());
+        assertEquals("com.cs407.SnapTask", appContext.getPackageName());
     }
 }

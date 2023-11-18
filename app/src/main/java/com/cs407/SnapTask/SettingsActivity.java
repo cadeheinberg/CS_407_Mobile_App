@@ -1,11 +1,11 @@
-package com.cs407.cs407mobileapp;
+package com.cs407.SnapTask;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
 public class SettingsActivity extends AppCompatActivity {
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

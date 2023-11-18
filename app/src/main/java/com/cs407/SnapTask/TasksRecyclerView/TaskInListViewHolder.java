@@ -1,4 +1,4 @@
-package com.cs407.cs407mobileapp.TasksRecyclerView;
+package com.cs407.SnapTask.TasksRecyclerView;
 
 import android.util.Log;
 import android.view.View;
@@ -7,7 +7,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import com.cs407.cs407mobileapp.R;
+
+import com.cs407.SnapTask.R;
 
 public class TaskInListViewHolder extends RecyclerView.ViewHolder {
     public CheckBox checkbox;
@@ -15,7 +16,7 @@ public class TaskInListViewHolder extends RecyclerView.ViewHolder {
     public TextView startDate;
     public TextView endDate;
     public TextView locationName;
-
+    
     public TaskInListViewHolder(@NonNull View itemView) {
         super(itemView);
         title = itemView.findViewById(R.id.taskTitleText);
@@ -24,7 +25,7 @@ public class TaskInListViewHolder extends RecyclerView.ViewHolder {
         startDate = itemView.findViewById(R.id.taskStartDateText);
         endDate = itemView.findViewById(R.id.taskEndDateText);
     }
-
+    
     //        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, TaskManager.getTasksList());
 //        ListView taskListItem = findViewById(R.id.tasksRecylerViewToday);
 //        taskListItem.setAdapter(adapter);

@@ -1,4 +1,4 @@
-package com.cs407.cs407mobileapp;
+package com.cs407.SnapTask;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,16 +11,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.cs407.cs407mobileapp.Database.DatabaseHandler;
-import com.cs407.cs407mobileapp.TasksRecyclerView.TaskManager;
-import com.cs407.cs407mobileapp.TasksRecyclerView.TaskObject;
+import com.cs407.SnapTask.Database.DatabaseHandler;
+import com.cs407.SnapTask.TasksRecyclerView.TaskManager;
+import com.cs407.SnapTask.TasksRecyclerView.TaskObject;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class AddEditTaskActivity extends AppCompatActivity {
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,15 +30,15 @@ public class AddEditTaskActivity extends AppCompatActivity {
         Intent intent = getIntent();
         int positionInList = intent.getIntExtra("positionInList", -1);
         TaskObject taskObject = null;
-        if(positionInList != -1){
+        if (positionInList != -1) {
             taskObject = TaskManager.getTaskObject(positionInList);
             editTextTaskContent.setText(taskObject.getTitle());
         }
         Button saveButton = findViewById(R.id.buttonSaveTask);
-        saveButton.setOnClickListener(new View.OnClickListener(){
+        saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(positionInList == -1){
+                if (positionInList == -1) {
                     // creating a new task
                     DateFormat dateFormat = new SimpleDateFormat("HH:mm");
                     String startStrDate = dateFormat.format(new Date());
@@ -57,7 +57,7 @@ public class AddEditTaskActivity extends AppCompatActivity {
                             title,
                             description);
                     Log.i("info: ", "ADDED NEW TASK");
-                }else{
+                } else {
                     // editing a task
                     String title = editTextTaskContent.getText().toString();
                     TaskManager.getTaskObject(positionInList).setTitle(title);
@@ -65,23 +65,23 @@ public class AddEditTaskActivity extends AppCompatActivity {
                 goToTasksActivity();
             }
         });
-
+        
         Button deleteButton = (Button) findViewById(R.id.buttonDeleteTask);
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(positionInList != -1){
+                if (positionInList != -1) {
                     TaskManager.removeTask(TaskManager.getTaskObject(positionInList));
                 }
                 goToTasksActivity();
             }
         });
     }
-
-    private void goToTasksActivity(){
+    
+    private void goToTasksActivity() {
         Intent intent = new Intent(this, TasksActivity.class);
         startActivity(intent);
     }
-
-
+    
+    
 }

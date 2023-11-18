@@ -13,5 +13,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "cs407mobileapp"
+rootProject.name = "SnapTask"
 include ':app'

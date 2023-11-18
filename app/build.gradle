@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace 'com.cs407.cs407mobileapp'
+    namespace 'com.cs407.SnapTask'
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.cs407.cs407mobileapp"
+        applicationId "com.cs407.SnapTask"
         minSdk 26
         targetSdk 34
         versionCode 1

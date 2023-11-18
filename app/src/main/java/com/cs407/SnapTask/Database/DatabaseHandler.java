@@ -1,4 +1,4 @@
-package com.cs407.cs407mobileapp.Database;
+package com.cs407.SnapTask.Database;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.cs407.cs407mobileapp.TasksRecyclerView.TaskObject;
+import com.cs407.SnapTask.TasksRecyclerView.TaskObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,29 +26,31 @@ public class DatabaseHandler {
     private static final String DESCRIPTION = "description";
     private static SQLiteDatabase sqLiteDatabase;
     private String currentUsername;
-    public DatabaseHandler (Context context, String username){
-        if(sqLiteDatabase == null){
+    
+    public DatabaseHandler(Context context, String username) {
+        if (sqLiteDatabase == null) {
             SQLiteDatabase sqLiteDatabase = context.openOrCreateDatabase(DATABASE_NAME, Context.MODE_PRIVATE, null);
             this.sqLiteDatabase = sqLiteDatabase;
         }
         this.currentUsername = username;
     }
-
-    public void closeHandler(){
+    
+    public void closeHandler() {
         sqLiteDatabase.close();
     }
-    private void createTableInDatabase(){
+    
+    private void createTableInDatabase() {
         sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " " +
                 "(" + ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + CHECKED + " INTEGER, " +
                 USERNAME + " TEXT, " + START_DATE + " TEXT, " + END_DATE + " TEXT, " +
                 LOCATION_NAME + " TEXT, " + LOCATION_ADDRESS + " TEXT, " + TITLE + " TEXT, " +
                 DESCRIPTION + " TEXT)");
     }
-
-    public ArrayList<TaskObject> getTasksFromDatabase(){
+    
+    public ArrayList<TaskObject> getTasksFromDatabase() {
         createTableInDatabase();
         ArrayList<TaskObject> fromDatabaseList = new ArrayList<TaskObject>();
-
+        
         // Populate tasksList from tasks in the SQL table with
         // a matching username
         Cursor c = sqLiteDatabase.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + USERNAME + " LIKE ?",
@@ -63,7 +65,7 @@ public class DatabaseHandler {
         int titleHeader = c.getColumnIndex(TITLE);
         int descriptionHeader = c.getColumnIndex(DESCRIPTION);
         c.moveToFirst();
-        while(!c.isAfterLast()){
+        while (!c.isAfterLast()) {
             fromDatabaseList.add(new TaskObject(c.getInt(idHeader), intToBoolean(c.getInt(checkedHeader)),
                     c.getString(usernameHeader), c.getString(startDateHeader), c.getString(endDateHeader),
                     c.getString(locationNameHeader), c.getString(locationAddressHeader), c.getString(titleHeader),
@@ -71,11 +73,11 @@ public class DatabaseHandler {
             c.moveToNext();
         }
         c.close();
-
+        
         return fromDatabaseList;
     }
-
-    public void addTaskToDatabase(TaskObject task){
+    
+    public void addTaskToDatabase(TaskObject task) {
         createTableInDatabase();
         ContentValues cv = new ContentValues();
         cv.put(CHECKED, booleanToInt(task.isChecked()));
@@ -88,8 +90,8 @@ public class DatabaseHandler {
         cv.put(DESCRIPTION, task.getDescription());
         sqLiteDatabase.insert(TABLE_NAME, null, cv);
     }
-
-    public void updateTaskInDatabase(TaskObject task){
+    
+    public void updateTaskInDatabase(TaskObject task) {
         createTableInDatabase();
         ContentValues cv = new ContentValues();
         cv.put(CHECKED, booleanToInt(task.isChecked()));
@@ -102,24 +104,24 @@ public class DatabaseHandler {
         cv.put(DESCRIPTION, task.getDescription());
         sqLiteDatabase.update(TABLE_NAME, cv, ID + "=? and " + USERNAME + "=?", new String[]{String.valueOf(task.getId()), task.getUsername()});
     }
-
-    public void deleteTaskFromDatabase(TaskObject task){
+    
+    public void deleteTaskFromDatabase(TaskObject task) {
         createTableInDatabase();
         sqLiteDatabase.delete(TABLE_NAME, ID + "=? and " + USERNAME + "=?", new String[]{String.valueOf(task.getId()), task.getUsername()});
     }
-
-    private boolean intToBoolean(int n){
-        if(n == 1){
+    
+    private boolean intToBoolean(int n) {
+        if (n == 1) {
             return true;
         }
         return false;
     }
-
-    private int booleanToInt(boolean b){
-        if(b){
+    
+    private int booleanToInt(boolean b) {
+        if (b) {
             return 1;
         }
         return 0;
     }
-
+    
 }

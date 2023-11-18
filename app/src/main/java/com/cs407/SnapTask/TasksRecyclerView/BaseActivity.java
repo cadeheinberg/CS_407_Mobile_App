@@ -1,4 +1,4 @@
-package com.cs407.cs407mobileapp.TasksRecyclerView;
+package com.cs407.SnapTask.TasksRecyclerView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,15 +8,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-import com.cs407.cs407mobileapp.CameraActivity;
-import com.cs407.cs407mobileapp.GalleryActivity;
-import com.cs407.cs407mobileapp.R;
-import com.cs407.cs407mobileapp.TasksActivity;
+import com.cs407.SnapTask.CameraActivity;
+import com.cs407.SnapTask.GalleryActivity;
+import com.cs407.SnapTask.R;
+import com.cs407.SnapTask.TasksActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public abstract class BaseActivity extends AppCompatActivity {
     protected BottomNavigationView bottomNav;
-// this is a test
+    
+    // this is a test
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,10 +46,10 @@ public abstract class BaseActivity extends AppCompatActivity {
 //                return false;
 //            }
 //        });
-
-
+    
+    
     }
-
+    
     @Override
     public void setContentView(int layoutResID) {
         super.setContentView(R.layout.activity_base);
@@ -56,6 +57,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         ViewGroup contentView = findViewById(R.id.activity_content);
         inflater.inflate(layoutResID, contentView, true);
     }
-
-
+    
+    
 }
