@@ -18,6 +18,8 @@ public class GalleryActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Gallery");
     }
 
+    //This is the camera branch
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
