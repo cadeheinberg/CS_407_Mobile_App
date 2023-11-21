@@ -10,15 +10,12 @@ import android.os.Environment;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Toast;
 
-import com.cs407.SnapTask.TasksRecyclerView.ListAdapter;
+import com.cs407.SnapTask.GalleryListView.ListAdapter;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 
 public class GalleryActivity extends AppCompatActivity {
 

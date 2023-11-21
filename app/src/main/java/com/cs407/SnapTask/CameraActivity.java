@@ -53,6 +53,8 @@ public class CameraActivity extends AppCompatActivity implements ImageAnalysis.A
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
+        getSupportActionBar().setTitle("10m 56s remaining");
+        getSupportActionBar().setSubtitle("Take picture at the gym");
 
         if(ContextCompat.checkSelfPermission(this.getApplicationContext(), Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED) {

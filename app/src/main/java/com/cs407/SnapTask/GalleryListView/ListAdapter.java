@@ -1,4 +1,4 @@
-package com.cs407.SnapTask.TasksRecyclerView;
+package com.cs407.SnapTask.GalleryListView;
 
 import android.content.Context;
 import android.graphics.Bitmap;
