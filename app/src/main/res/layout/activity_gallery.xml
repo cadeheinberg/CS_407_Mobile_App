@@ -5,19 +5,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".GalleryActivity">
 
-    <ImageView
-        android:id="@+id/galleryImageView1"
-        android:layout_width="330dp"
-        android:layout_height="310dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="38dp"></ImageView>
-
-    <ImageView
-        android:id="@+id/galleryImageView2"
-        android:layout_width="330dp"
-        android:layout_height="310dp"
-        android:layout_below="@id/galleryImageView1"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"></ImageView>
+    <ListView
+        android:id="@+id/galleryListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </ListView>
 
 </RelativeLayout>

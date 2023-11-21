@@ -4,20 +4,26 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.Toast;
 
+import com.cs407.SnapTask.TasksRecyclerView.ListAdapter;
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 public class GalleryActivity extends AppCompatActivity {
 
-    public static ArrayList<Bitmap> thumbnails = new ArrayList<Bitmap>();
-    ImageView imageView1;
-    ImageView imageView2;
+    ListView galleryListView;
+    ArrayList<Bitmap> thumbnails = new ArrayList<Bitmap>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,15 +32,19 @@ public class GalleryActivity extends AppCompatActivity {
         //getSupportActionBar().hide();
         getSupportActionBar().setTitle("Gallery");
 
-        imageView1 = findViewById(R.id.galleryImageView1);
-        imageView2 = findViewById(R.id.galleryImageView2);
+        galleryListView = findViewById(R.id.galleryListView);
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File[] pictures = storageDir.listFiles();
+        thumbnails.clear();
+        for( int i = 0; i < pictures.length; i++){
+            if(pictures[i] == null){
+                break;
+            }
+            thumbnails.add(BitmapFactory.decodeFile(pictures[0].getAbsolutePath()));
+        }
 
-        if(thumbnails.size() >= 1 && thumbnails.get(0) != null){
-            imageView1.setImageBitmap(thumbnails.get(0));
-        }
-        if(thumbnails.size() >= 2 && thumbnails.get(1) != null){
-            imageView2.setImageBitmap(thumbnails.get(1));
-        }
+        ListAdapter listAdapter = new ListAdapter(GalleryActivity.this, thumbnails);
+        galleryListView.setAdapter(listAdapter);
     }
 
     //This is the camera branch

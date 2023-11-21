@@ -1,13 +1,18 @@
 package com.cs407.SnapTask;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -24,6 +29,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cs407.SnapTask.Database.DatabaseHandler;
 import com.cs407.SnapTask.TasksRecyclerView.TaskAdapter;
@@ -44,6 +50,9 @@ public class TasksActivity extends AppCompatActivity {
     
     private static RecyclerView tasksRecyclerView;
     private static TaskAdapter tasksAdapter;
+
+    private static final int PERMISSIONS_REQUEST_WRITE = 43;
+    private static final int PERMISSIONS_REQUEST_READ = 44;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +83,42 @@ public class TasksActivity extends AppCompatActivity {
         tasksRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         tasksAdapter = new TaskAdapter(this, TaskManager.getTasksList());
         tasksRecyclerView.setAdapter(tasksAdapter);
+        if(ContextCompat.checkSelfPermission(this.getApplicationContext(), android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            // Permission is not granted
+            ActivityCompat.requestPermissions(this, new String[] { android.Manifest.permission.WRITE_EXTERNAL_STORAGE }, PERMISSIONS_REQUEST_WRITE);
+        }
+        if(ContextCompat.checkSelfPermission(this.getApplicationContext(), android.Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            // Permission is not granted
+            ActivityCompat.requestPermissions(this, new String[] { Manifest.permission.READ_EXTERNAL_STORAGE }, PERMISSIONS_REQUEST_READ);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == PERMISSIONS_REQUEST_WRITE) {
+            // Checking whether user granted the permission or not.
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Showing the toast message
+                Toast.makeText(this, "Write Permission Granted", Toast.LENGTH_SHORT).show();
+            }
+            else {
+//                Toast.makeText(this, "Write Permission Denied", Toast.LENGTH_SHORT).show();
+            }
+        }
+        if (requestCode == PERMISSIONS_REQUEST_READ) {
+            // Checking whether user granted the permission or not.
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Showing the toast message
+                Toast.makeText(this, "Read Permission Granted", Toast.LENGTH_SHORT).show();
+            }
+            else {
+//                Toast.makeText(this, "Read Permission Denied", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
     
     public void goToAddEditTaskActivity(int taskId) {
