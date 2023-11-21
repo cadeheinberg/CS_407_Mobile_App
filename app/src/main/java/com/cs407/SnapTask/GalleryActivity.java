@@ -21,6 +21,7 @@ public class GalleryActivity extends AppCompatActivity {
 
     ListView galleryListView;
     ArrayList<Bitmap> thumbnails = new ArrayList<Bitmap>();
+    ListAdapter listAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,20 +29,24 @@ public class GalleryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_gallery);
         //getSupportActionBar().hide();
         getSupportActionBar().setTitle("Gallery");
-
         galleryListView = findViewById(R.id.galleryListView);
+        listAdapter = new ListAdapter(GalleryActivity.this, thumbnails);
+        galleryListView.setAdapter(listAdapter);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File[] pictures = storageDir.listFiles();
         thumbnails.clear();
-        for( int i = 0; i < pictures.length; i++){
-            if(pictures[i] == null){
+        for( int i = 0; i < pictures.length; i++) {
+            if (pictures[i] == null) {
                 break;
             }
-            thumbnails.add(BitmapFactory.decodeFile(pictures[0].getAbsolutePath()));
+            thumbnails.add(BitmapFactory.decodeFile(pictures[i].getAbsolutePath()));
         }
-
-        ListAdapter listAdapter = new ListAdapter(GalleryActivity.this, thumbnails);
-        galleryListView.setAdapter(listAdapter);
+        listAdapter.notifyDataSetChanged();
     }
 
     //This is the camera branch
