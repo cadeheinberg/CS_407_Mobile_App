@@ -44,6 +44,7 @@ public class CameraActivity extends AppCompatActivity {
         if(requestCode == REQUEST_CODE && resultCode == RESULT_OK){
             Bitmap photo = (Bitmap) data.getExtras().get("data");
             imageView.setImageBitmap(photo);
+            GalleryActivity.thumbnails.add(photo);
         }else{
             Toast.makeText(this, "Error displaying photo", Toast.LENGTH_SHORT).show();
             super.onActivityResult(requestCode, resultCode, data);
