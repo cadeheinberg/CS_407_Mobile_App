@@ -45,13 +45,14 @@ public class AddEditTaskActivity extends AppCompatActivity {
                     Date endDate = new Date();
                     endDate.setTime(new Date().getTime() + 3600000);
                     String endStrDate = dateFormat.format(endDate);
+                    Date startDate = new Date();
                     String locationName = "Starbucks";
                     String locationAddress = "54312 Main St Chicago Illinois";
                     String title = editTextTaskContent.getText().toString();
                     String description = "No description yet";
                     TaskManager.addTask(false,
                             foundUsername,
-                            startStrDate, endStrDate,
+                            startDate, endDate,
                             locationName,
                             locationAddress,
                             title,
