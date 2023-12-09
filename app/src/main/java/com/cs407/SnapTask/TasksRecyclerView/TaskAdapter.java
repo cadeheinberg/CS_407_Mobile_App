@@ -12,7 +12,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.cs407.SnapTask.AddEditTaskActivity;
 import com.cs407.SnapTask.R;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskInListViewHolder> {
     
@@ -49,11 +52,23 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskInListViewHolder> {
     
     @Override
     public void onBindViewHolder(@NonNull TaskInListViewHolder holder, int position) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
         holder.title.setText(taskObjects.get(position).getTitle());
         holder.checkbox.setChecked(taskObjects.get(position).isChecked());
         holder.locationName.setText(taskObjects.get(position).getLocationName());
-        holder.startDate.setText(taskObjects.get(position).getStartDate());
-        holder.endDate.setText(taskObjects.get(position).getEndDate());
+        Date startDate = taskObjects.get(position).getStartDate();
+        if (startDate != null) {
+            holder.startDate.setText(dateFormat.format(startDate));
+        } else {
+            holder.startDate.setText("Any Time");
+        }
+
+        Date endDate = taskObjects.get(position).getEndDate();
+        if (endDate != null) {
+            holder.endDate.setText(dateFormat.format(endDate));
+        } else {
+            holder.endDate.setText("Any Time");
+        }
     }
     
     @Override
