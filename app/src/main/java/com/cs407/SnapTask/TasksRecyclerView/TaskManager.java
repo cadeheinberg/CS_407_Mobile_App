@@ -41,8 +41,18 @@ public class TaskManager {
     // call this every minute or however often we want to update the queue based on if
     // its due date is passed
     public static void removeExpiredTasks() {
-        while (!taskQueue.isEmpty() && taskQueue.peek().getEndDate().before(new Date())) {
-            taskQueue.poll(); // Removes the expired task
+        while (!taskQueue.isEmpty()) {
+            TaskObject task = taskQueue.peek();
+//            if (task.getEndDate() == null) {
+//                // If endDate is null, it means the task is set for "Any Time"
+//                break;
+//            }
+
+            if (task.getEndDate() != null && task.getEndDate().before(new Date())) {
+                taskQueue.poll(); // Removes the expired task
+            } else {
+                break; // The first task in the queue is not expired, so no further tasks will be expired
+            }
         }
     }
 
@@ -56,8 +66,9 @@ public class TaskManager {
         }
         return false;
     }
-    
-    public static void addTask(boolean checked, String username, Date startDate, Date endDate, String locationName, String locationAddress, String title, String description) {
+
+    // changed from void to returning the created task
+    public static TaskObject addTask(boolean checked, String username, Date startDate, Date endDate, String locationName, String locationAddress, String title, String description) {
         nextId = nextId + 1;
         TaskObject taskObject = new TaskObject(nextId, checked, username, startDate, endDate, locationName, locationAddress, title, description);
         tasksList.add(taskObject);
@@ -66,6 +77,10 @@ public class TaskManager {
         
         // Updating the database and RecyclerView to show changes
         db.addTaskToDatabase(taskObject);
+
+        addTaskToQueue(taskObject);
+        removeExpiredTasks();
+        return(taskObject);
     }
     
     public static void removeTask(TaskObject taskObject) {
@@ -89,6 +104,8 @@ public class TaskManager {
             if (taskObject.getId() > nextId) {
                 nextId = taskObject.getId();
             }
+            addTaskToQueue(taskObject);
+            removeExpiredTasks();
         }
     }
     

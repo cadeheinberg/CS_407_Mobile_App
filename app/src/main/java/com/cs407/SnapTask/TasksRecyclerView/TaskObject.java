@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Comparator;
 
-public class TaskObject {
+public class TaskObject implements Comparable<TaskObject> {
 
     private int id;
     private boolean checked;
@@ -112,7 +112,8 @@ public class TaskObject {
     }
 
 
-    public int compare(TaskObject other) {
+    @Override
+    public int compareTo(TaskObject other) {
         Date thisEndDate = this.getEndDate();
         Date otherEndDate = other.getEndDate();
 

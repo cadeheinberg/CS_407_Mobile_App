@@ -29,12 +29,16 @@ import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.pm.PackageManager;
 import android.util.Log;
+
+import com.cs407.SnapTask.TasksRecyclerView.TaskManager;
+import com.cs407.SnapTask.TasksRecyclerView.TaskObject;
 import com.google.common.util.concurrent.ListenableFuture;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
 
@@ -53,9 +57,7 @@ public class CameraActivity extends AppCompatActivity implements ImageAnalysis.A
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
-        getSupportActionBar().setTitle("10m 56s remaining");
-        getSupportActionBar().setSubtitle("Take picture at the gym");
-
+        displayCurrentTask();
         if(ContextCompat.checkSelfPermission(this.getApplicationContext(), Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED) {
             // Permission is not granted
@@ -80,6 +82,26 @@ public class CameraActivity extends AppCompatActivity implements ImageAnalysis.A
             }
         }, getExecutor());
 
+    }
+
+    private void displayCurrentTask() {
+        TaskObject currentTask = TaskManager.getNextTask();
+        if (currentTask != null) {
+            String taskDetails = formatDateTime(currentTask.getEndDate());
+            getSupportActionBar().setTitle(currentTask.getTitle());
+            getSupportActionBar().setSubtitle(taskDetails);
+        } else {
+            getSupportActionBar().setTitle("No current tasks");
+        }
+    }
+
+    private String formatDateTime(Date date) {
+        if (date != null) {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
+            return dateFormat.format(date);
+        } else {
+            return "Any Time";
+        }
     }
 
     @Override
