@@ -85,7 +85,7 @@ public class TaskManager {
     
     public static void removeTask(TaskObject taskObject) {
         tasksList.remove(taskObject);
-        
+        removeTaskFromQueue(taskObject);
         // Updating the database and RecyclerView to show changes
         db.deleteTaskFromDatabase(taskObject);
     }
