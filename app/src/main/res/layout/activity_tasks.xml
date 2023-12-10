@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/tasksRecylerViewToday"
+        android:id="@+id/tasksRecyclerViewToday"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tasksHeadingToday"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        android:nestedScrollingEnabled="true"/>
+        android:nestedScrollingEnabled="true"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/tasksButtonNewTask"
@@ -23,6 +23,8 @@
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="32dp"
         android:backgroundTint="@android:color/holo_purple"
-        android:src="@drawable/ic_add" />
+        android:contentDescription="add task button"
+        android:src="@drawable/ic_add"
+        tools:ignore="SpeakableTextPresentCheck" />
 
 </RelativeLayout>

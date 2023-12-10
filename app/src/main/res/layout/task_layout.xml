@@ -1,6 +1,5 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tool="http://schemas.android.com/tools"
 
     android:id="@+id/taskContainer"
     android:layout_height="wrap_content"
@@ -14,32 +13,35 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="8dp">
+
         <CheckBox
             android:id="@+id/taskToDoCheckBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:buttonTint="@android:color/holo_purple">
-        </CheckBox>
+            android:buttonTint="@android:color/holo_purple" />
+
         <TextView
             android:id="@+id/taskTitleText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sample Text"
+            android:text="@string/sample_text"
             android:background="@null"
             android:layout_toEndOf="@+id/taskToDoCheckBox"
-            android:textSize="18dp"
+            android:textSize="18sp"
             android:layout_marginBottom="0dp"
             android:layout_marginTop="2dp" />
+
         <TextView
             android:id="@+id/taskLocationName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sample Text"
-            android:background="@null"
-            android:layout_toEndOf="@+id/taskToDoCheckBox"
             android:layout_below="@id/taskTitleText"
-            android:textSize="12dp"
-            android:textColor="#8030B8" />
+            android:layout_toEndOf="@+id/taskToDoCheckBox"
+            android:background="@null"
+            android:text="@string/sample_text"
+            android:textColor="#8030B8"
+            android:textSize="12sp" />
+
         <TextView
             android:id="@+id/taskLocationDivider"
             android:layout_width="wrap_content"
@@ -48,43 +50,43 @@
             android:background="@null"
             android:layout_toEndOf="@+id/taskLocationName"
             android:layout_below="@id/taskTitleText"
-            android:textSize="12dp"
+            android:textSize="12sp"
             android:textColor="#8030B8" />
+
         <TextView
             android:id="@+id/taskStartDateText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sample Text"
-            android:background="@null"
-            android:layout_toEndOf="@+id/taskLocationDivider"
             android:layout_below="@id/taskTitleText"
-            android:textSize="12dp"
+            android:layout_marginLeft="4dp"
+            android:layout_toEndOf="@+id/taskLocationDivider"
+            android:background="@null"
+            android:text="@string/sample_text"
             android:textColor="#8030B8"
-            android:layout_marginLeft="6dp"
-            />
+            android:textSize="12sp" />
+
         <TextView
             android:id="@+id/taskDateDivider"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="-"
-            android:background="@null"
-            android:layout_toEndOf="@+id/taskStartDateText"
             android:layout_below="@id/taskTitleText"
-            android:textSize="12dp"
-            android:textColor="#8030B8"
             android:layout_marginLeft="4dp"
-            />
+            android:layout_toEndOf="@+id/taskStartDateText"
+            android:background="@null"
+            android:text="-"
+            android:textColor="#8030B8"
+            android:textSize="12sp" />
+
         <TextView
             android:id="@+id/taskEndDateText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sample Text"
-            android:background="@null"
-            android:layout_toEndOf="@+id/taskDateDivider"
             android:layout_below="@id/taskTitleText"
-            android:textSize="12dp"
-            android:textColor="#8030B8"
             android:layout_marginLeft="4dp"
-            />
+            android:layout_toEndOf="@+id/taskDateDivider"
+            android:background="@null"
+            android:text="@string/sample_text"
+            android:textColor="#8030B8"
+            android:textSize="12sp" />
     </RelativeLayout>
 </androidx.cardview.widget.CardView>
