@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -17,7 +16,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
         getSupportActionBar().setTitle("Login");
         setButtonOnClickListeners();
         this.sharedPreferences = getSharedPreferences("SnapTask", Context.MODE_PRIVATE);
@@ -25,13 +24,10 @@ public class LoginActivity extends AppCompatActivity {
     
     private void setButtonOnClickListeners() {
         Button buttonLogin = (Button) findViewById(R.id.loginButton);
-        buttonLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EditText editTextUsername = (EditText) findViewById(R.id.loginUsername);
-                sharedPreferences.edit().putString("username", editTextUsername.getText().toString()).apply();
-                goToTasksActivity();
-            }
+        buttonLogin.setOnClickListener(v -> {
+            EditText editTextUsername = (EditText) findViewById(R.id.loginUsername);
+            sharedPreferences.edit().putString("username", editTextUsername.getText().toString()).apply();
+            goToTasksActivity();
         });
     }
     
