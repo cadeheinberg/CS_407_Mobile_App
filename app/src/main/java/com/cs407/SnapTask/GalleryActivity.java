@@ -18,11 +18,11 @@ import java.io.File;
 import java.util.ArrayList;
 
 public class GalleryActivity extends AppCompatActivity {
-
+    
     ListView galleryListView;
     ArrayList<Bitmap> thumbnails = new ArrayList<Bitmap>();
     ListAdapter listAdapter;
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,14 +33,14 @@ public class GalleryActivity extends AppCompatActivity {
         listAdapter = new ListAdapter(GalleryActivity.this, thumbnails);
         galleryListView.setAdapter(listAdapter);
     }
-
+    
     @Override
     protected void onResume() {
         super.onResume();
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File[] pictures = storageDir.listFiles();
         thumbnails.clear();
-        for( int i = 0; i < pictures.length; i++) {
+        for (int i = 0; i < pictures.length; i++) {
             if (pictures[i] == null) {
                 break;
             }
@@ -48,46 +48,46 @@ public class GalleryActivity extends AppCompatActivity {
         }
         listAdapter.notifyDataSetChanged();
     }
-
+    
     //This is the camera branch
-
+    
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.bottom_navigation_menu, menu);
         return true;
     }
-
+    
     @Override
-    public boolean onOptionsItemSelected(MenuItem item){
+    public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
-        if(itemId == R.id.nav_tasks){
+        if (itemId == R.id.nav_tasks) {
             goToTasksActivity();
-        } else if(itemId == R.id.nav_camera){
+        } else if (itemId == R.id.nav_camera) {
             goToCameraActivity();
-        } else if(itemId == R.id.nav_gallery){
+        } else if (itemId == R.id.nav_gallery) {
             goToGalleryActivity();
-        } else if(itemId == R.id.nav_settings){
+        } else if (itemId == R.id.nav_settings) {
             goToSettingsActivity();
         }
         return true;
     }
-
+    
     private void goToTasksActivity() {
         Intent intent = new Intent(this, TasksActivity.class);
         startActivity(intent);
     }
-
+    
     private void goToCameraActivity() {
         Intent intent = new Intent(this, CameraActivity.class);
         startActivity(intent);
     }
-
+    
     private void goToGalleryActivity() {
         Intent intent = new Intent(this, GalleryActivity.class);
         startActivity(intent);
     }
-
+    
     private void goToSettingsActivity() {
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);

@@ -2,16 +2,11 @@ package com.cs407.SnapTask.TasksRecyclerView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-import com.cs407.SnapTask.CameraActivity;
-import com.cs407.SnapTask.GalleryActivity;
 import com.cs407.SnapTask.R;
-import com.cs407.SnapTask.TasksActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public abstract class BaseActivity extends AppCompatActivity {

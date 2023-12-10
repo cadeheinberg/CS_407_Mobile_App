@@ -7,4 +7,8 @@
     <string name="sample_text">Sample Text</string>
     <string name="take_picture">Take Picture</string>
     <string name="start_recording">Start Recording</string>
+    <string name="tasks_title">Tasks</string>
+    <string name="camera_title">Camera</string>
+    <string name="gallery_title">Gallery</string>
+    <string name="settings_title">Settings</string>
 </resources>
