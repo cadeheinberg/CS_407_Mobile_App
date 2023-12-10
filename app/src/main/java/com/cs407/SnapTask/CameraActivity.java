@@ -5,8 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -32,6 +30,7 @@ import android.util.Log;
 
 import com.cs407.SnapTask.TasksRecyclerView.TaskManager;
 import com.cs407.SnapTask.TasksRecyclerView.TaskObject;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.common.util.concurrent.ListenableFuture;
 
 import java.io.File;
@@ -47,8 +46,6 @@ public class CameraActivity extends AppCompatActivity implements ImageAnalysis.A
     
     PreviewView previewView;
     private ImageCapture imageCapture;
-    private Button pictureButton;
-    private Button recordButton;
     
     
     //could use any number for these
@@ -58,6 +55,21 @@ public class CameraActivity extends AppCompatActivity implements ImageAnalysis.A
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
+        
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.getMenu().findItem(R.id.nav_camera).setChecked(true);
+        bottomNavigationView.setOnNavigationItemSelectedListener((MenuItem item) -> {
+            int itemId = item.getItemId();
+            if (itemId == R.id.nav_tasks) {
+                startActivity(new Intent(this, TasksActivity.class));
+            } else if (itemId == R.id.nav_gallery) {
+                startActivity(new Intent(this, GalleryActivity.class));
+            } else if (itemId == R.id.nav_settings) {
+                startActivity(new Intent(this, SettingsActivity.class));
+            }
+            return true;
+        });
+        
         displayCurrentTask();
         if (ContextCompat.checkSelfPermission(this.getApplicationContext(), Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -66,8 +78,8 @@ public class CameraActivity extends AppCompatActivity implements ImageAnalysis.A
         }
         
         previewView = findViewById(R.id.cameraPreview);
-        pictureButton = findViewById(R.id.pictureButton);
-        recordButton = findViewById(R.id.recordButton);
+        Button pictureButton = findViewById(R.id.pictureButton);
+        Button recordButton = findViewById(R.id.recordButton);
         
         pictureButton.setOnClickListener(this);
         recordButton.setOnClickListener(this);
@@ -185,48 +197,6 @@ public class CameraActivity extends AppCompatActivity implements ImageAnalysis.A
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File imageFile = File.createTempFile(imageName, ".jpg", storageDir);
         return imageFile;
-    }
-    
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.bottom_navigation_menu, menu);
-        return true;
-    }
-    
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int itemId = item.getItemId();
-        if (itemId == R.id.nav_tasks) {
-            goToTasksActivity();
-        } else if (itemId == R.id.nav_camera) {
-            goToCameraActivity();
-        } else if (itemId == R.id.nav_gallery) {
-            goToGalleryActivity();
-        } else if (itemId == R.id.nav_settings) {
-            goToSettingsActivity();
-        }
-        return true;
-    }
-    
-    private void goToTasksActivity() {
-        Intent intent = new Intent(this, TasksActivity.class);
-        startActivity(intent);
-    }
-    
-    private void goToCameraActivity() {
-        Intent intent = new Intent(this, CameraActivity.class);
-        startActivity(intent);
-    }
-    
-    private void goToGalleryActivity() {
-        Intent intent = new Intent(this, GalleryActivity.class);
-        startActivity(intent);
-    }
-    
-    private void goToSettingsActivity() {
-        Intent intent = new Intent(this, SettingsActivity.class);
-        startActivity(intent);
     }
     
     @Override

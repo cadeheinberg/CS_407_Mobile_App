@@ -20,14 +20,12 @@ import android.widget.Toast;
 
 import com.cs407.SnapTask.TasksRecyclerView.TaskAdapter;
 import com.cs407.SnapTask.TasksRecyclerView.TaskManager;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class TasksActivity extends AppCompatActivity {
     
     SharedPreferences sharedPreferences;
-    
-    private static RecyclerView tasksRecyclerView;
-    private static TaskAdapter tasksAdapter;
     
     private static final int PERMISSIONS_REQUEST_WRITE = 43;
     private static final int PERMISSIONS_REQUEST_READ = 44;
@@ -38,6 +36,20 @@ public class TasksActivity extends AppCompatActivity {
         setContentView(R.layout.activity_tasks);
         //getSupportActionBar().hide();
         getSupportActionBar().setTitle("Today");
+        
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.getMenu().findItem(R.id.nav_tasks).setChecked(true);
+        bottomNavigationView.setOnNavigationItemSelectedListener((MenuItem item) -> {
+            int itemId = item.getItemId();
+            if (itemId == R.id.nav_camera) {
+                startActivity(new Intent(this, CameraActivity.class));
+            } else if (itemId == R.id.nav_gallery) {
+                startActivity(new Intent(this, GalleryActivity.class));
+            } else if (itemId == R.id.nav_settings) {
+                startActivity(new Intent(this, SettingsActivity.class));
+            }
+            return true;
+        });
         
         // Get username from shared preferences
         this.sharedPreferences = getSharedPreferences("SnapTask", Context.MODE_PRIVATE);
@@ -52,9 +64,9 @@ public class TasksActivity extends AppCompatActivity {
         FloatingActionButton buttonAddTask = findViewById(R.id.tasksButtonNewTask);
         buttonAddTask.setOnClickListener(v -> goToAddEditTaskActivity(-1));
         
-        tasksRecyclerView = findViewById(R.id.tasksRecyclerViewToday);
+        RecyclerView tasksRecyclerView = findViewById(R.id.tasksRecyclerViewToday);
         tasksRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        tasksAdapter = new TaskAdapter(this, TaskManager.getTasksList());
+        TaskAdapter tasksAdapter = new TaskAdapter(this, TaskManager.getTasksList());
         tasksRecyclerView.setAdapter(tasksAdapter);
         if (ContextCompat.checkSelfPermission(this.getApplicationContext(), android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -68,6 +80,7 @@ public class TasksActivity extends AppCompatActivity {
         }
     }
     
+    // TODO: update toasts
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -104,40 +117,4 @@ public class TasksActivity extends AppCompatActivity {
         inflater.inflate(R.menu.bottom_navigation_menu, menu);
         return true;
     }
-    
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int itemId = item.getItemId();
-        if (itemId == R.id.nav_tasks) {
-            goToTasksActivity();
-        } else if (itemId == R.id.nav_camera) {
-            goToCameraActivity();
-        } else if (itemId == R.id.nav_gallery) {
-            goToGalleryActivity();
-        } else if (itemId == R.id.nav_settings) {
-            goToSettingsActivity();
-        }
-        return true;
-    }
-    
-    private void goToTasksActivity() {
-        Intent intent = new Intent(this, TasksActivity.class);
-        startActivity(intent);
-    }
-    
-    private void goToCameraActivity() {
-        Intent intent = new Intent(this, CameraActivity.class);
-        startActivity(intent);
-    }
-    
-    private void goToGalleryActivity() {
-        Intent intent = new Intent(this, GalleryActivity.class);
-        startActivity(intent);
-    }
-    
-    private void goToSettingsActivity() {
-        Intent intent = new Intent(this, SettingsActivity.class);
-        startActivity(intent);
-    }
-    
 }
