@@ -46,7 +46,7 @@ public class CameraActivity extends AppCompatActivity implements ImageAnalysis.A
     
     PreviewView previewView;
     private ImageCapture imageCapture;
-    
+
     
     //could use any number for these
     private static final int PERMISSIONS_REQUEST_CAMERA = 42;
@@ -79,11 +79,9 @@ public class CameraActivity extends AppCompatActivity implements ImageAnalysis.A
         
         previewView = findViewById(R.id.cameraPreview);
         Button pictureButton = findViewById(R.id.pictureButton);
-        Button recordButton = findViewById(R.id.recordButton);
         
         pictureButton.setOnClickListener(this);
-        recordButton.setOnClickListener(this);
-        
+
         cameraProviderFuture = ProcessCameraProvider.getInstance(this);
         cameraProviderFuture.addListener(() -> {
             try {
