@@ -18,7 +18,7 @@ import java.util.PriorityQueue;
 
 public class TaskManager {
 
-    private static PriorityQueue<TaskObject> taskQueue = new PriorityQueue<>();
+    private static PriorityQueue<TaskObject> taskQueue = new PriorityQueue<TaskObject>();
     private static DatabaseHandler db;
     private static ArrayList<TaskObject> tasksList;
     private static int nextId = 1;

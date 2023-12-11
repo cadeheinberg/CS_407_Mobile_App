@@ -10,15 +10,15 @@
         android:id="@+id/editTextTaskInput"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="7dp"
-        android:layout_marginTop="7dp"
-        android:layout_marginEnd="7dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="47dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="65dp"
         android:ems="10"
         android:gravity="start|top"
-        android:hint="Start typing..."
-        android:inputType="textMultiLine"
-        app:layout_constraintBottom_toTopOf="@+id/buttonSaveTask"
+        android:hint="Title"
+        android:inputType="text"
+        app:layout_constraintBottom_toTopOf="@+id/headerStartTime"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -27,23 +27,75 @@
         android:id="@+id/buttonSaveTask"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="15dp"
-        android:layout_marginBottom="44dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="48dp"
         android:text="Save"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/buttonDeleteTask"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTaskInput" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/buttonDeleteTask"
+        app:layout_constraintTop_toBottomOf="@+id/headerEndTime" />
 
     <Button
         android:id="@+id/buttonDeleteTask"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="9dp"
+        android:layout_marginEnd="7dp"
+        android:layout_marginBottom="48dp"
         android:text="Delete"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/buttonSaveTask"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/buttonSetTimeStart"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="47dp"
+        android:onClick="popStartTimePicker"
+        android:text="Start Time"
+        app:layout_constraintBaseline_toBaselineOf="@+id/headerStartTime"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/buttonSaveTask"
+        app:layout_constraintStart_toEndOf="@+id/headerStartTime" />
+
+    <Button
+        android:id="@+id/buttonSetTimeEnd"
+        android:layout_width="0dp"
+        android:layout_height="51dp"
+        android:layout_marginTop="37dp"
+        android:layout_marginEnd="47dp"
+        android:onClick="popEndTimePicker"
+        android:text="End Time"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/headerEndTime"
+        app:layout_constraintTop_toBottomOf="@+id/buttonSetTimeStart" />
+
+    <TextView
+        android:id="@+id/headerStartTime"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="39dp"
+        android:layout_marginEnd="14dp"
+        android:layout_marginBottom="52dp"
+        android:text="Start Time:"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/headerEndTime"
+        app:layout_constraintEnd_toStartOf="@+id/buttonSetTimeStart"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextTaskInput" />
+
+    <TextView
+        android:id="@+id/headerEndTime"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="39dp"
+        android:layout_marginEnd="14dp"
+        android:layout_marginBottom="360dp"
+        android:text="End Time:"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/buttonSaveTask"
+        app:layout_constraintEnd_toStartOf="@+id/buttonSetTimeEnd"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/headerStartTime" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
