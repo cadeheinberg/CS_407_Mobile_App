@@ -53,6 +53,7 @@ public class TasksActivity extends AppCompatActivity {
         
         // Get username from shared preferences
         this.sharedPreferences = getSharedPreferences("SnapTask", Context.MODE_PRIVATE);
+        sharedPreferences.edit().putString("username", "user1").apply();
         String foundUsername = this.sharedPreferences.getString("username", "");
         
         if (TaskManager.isNull()) {
@@ -110,11 +111,5 @@ public class TasksActivity extends AppCompatActivity {
         intentAddEditTask.putExtra("positionInList", taskId);
         startActivity(intentAddEditTask);
     }
-    
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.bottom_navigation_menu, menu);
-        return true;
-    }
+
 }

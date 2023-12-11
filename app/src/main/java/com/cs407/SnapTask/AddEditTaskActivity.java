@@ -26,7 +26,7 @@ public class AddEditTaskActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_edit_task);
         EditText editTextTaskContent = findViewById(R.id.editTextTaskInput);
-        String foundUsername = getSharedPreferences("lab5_milestone", Context.MODE_PRIVATE).getString("username", "");
+        String foundUsername = getSharedPreferences("SnapTask", Context.MODE_PRIVATE).getString("username", "");
         Intent intent = getIntent();
         int positionInList = intent.getIntExtra("positionInList", -1);
         TaskObject taskObject = null;
