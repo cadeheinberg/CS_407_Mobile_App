@@ -38,6 +38,14 @@ public class TaskManager {
         return taskQueue.peek();
     }
 
+    public static TaskObject getTaskFromQueueWithID(int id){
+        return (TaskObject) taskQueue.toArray()[id];
+    }
+
+    public static int getSizeOfTaskQueue(){
+        return taskQueue.size();
+    }
+
     // call this every minute or however often we want to update the queue based on if
     // its due date is passed
     public static void removeExpiredTasks() {

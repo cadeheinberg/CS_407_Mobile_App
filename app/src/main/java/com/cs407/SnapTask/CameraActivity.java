@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -46,6 +48,8 @@ public class CameraActivity extends AppCompatActivity implements ImageAnalysis.A
     
     PreviewView previewView;
     private ImageCapture imageCapture;
+
+    int current_task_being_shown;
 
     
     //could use any number for these
@@ -93,9 +97,41 @@ public class CameraActivity extends AppCompatActivity implements ImageAnalysis.A
         }, getExecutor());
         
     }
-    
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.next_task, menu);
+        return true;
+    }
+
+    // called whenever an item in your options menu is selected
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        if (item.getItemId() == R.id.camera_next_task_button) {
+            displayNextTask();
+        }
+        return true;
+    }
+
+    private void displayNextTask() {
+        current_task_being_shown = (current_task_being_shown + 1) % TaskManager.getSizeOfTaskQueue();
+        TaskObject currentTask = TaskManager.getTaskFromQueueWithID(current_task_being_shown);
+        if (currentTask != null) {
+            String taskDetails = formatDateTime(currentTask.getEndDate());
+            getSupportActionBar().setTitle(currentTask.getTitle());
+            getSupportActionBar().setSubtitle(taskDetails);
+        } else {
+            getSupportActionBar().setTitle("No current tasks");
+        }
+
+    }
+
     private void displayCurrentTask() {
         TaskObject currentTask = TaskManager.getNextTask();
+        current_task_being_shown = 0;
         if (currentTask != null) {
             String taskDetails = formatDateTime(currentTask.getEndDate());
             getSupportActionBar().setTitle(currentTask.getTitle());
