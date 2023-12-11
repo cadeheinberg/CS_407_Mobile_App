@@ -1,5 +1,7 @@
 package com.cs407.SnapTask.TasksRecyclerView;
 
+import android.util.Log;
+
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -114,6 +116,7 @@ public class TaskObject implements Comparable<TaskObject> {
 
     @Override
     public int compareTo(TaskObject other) {
+        Log.i("i", "Comparing to + " + other.getTitle());
         Date thisEndDate = this.getEndDate();
         Date otherEndDate = other.getEndDate();
 
