@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.MenuItem;
@@ -57,7 +58,11 @@ public class GalleryActivity extends AppCompatActivity {
             if (picture == null) {
                 break;
             }
-            thumbnails.add(BitmapFactory.decodeFile(picture.getAbsolutePath()));
+            Matrix matrix = new Matrix();
+            matrix.postRotate(90);
+            Bitmap photoBitmap = BitmapFactory.decodeFile(picture.getAbsolutePath());
+            Bitmap rotatedBitmap = Bitmap.createBitmap(photoBitmap, 0, 0, photoBitmap.getWidth(), photoBitmap.getHeight(), matrix, true);
+            thumbnails.add(rotatedBitmap);
         }
         listAdapter.notifyDataSetChanged();
     }
