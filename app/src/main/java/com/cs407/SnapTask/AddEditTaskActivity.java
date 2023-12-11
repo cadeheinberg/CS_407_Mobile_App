@@ -38,10 +38,6 @@ public class AddEditTaskActivity extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: create default values, then if add populate with them and if edit they should already be populated
-                // TODO: but add and edit can be the same after values are populated, except edit should delete old vs after creating new
-                // TODO: make it so theres an editTextTaskContent for locations and dates too
-                // TODO: basically for edit we wanna add an edited copy the task then delete the old one
                 if (positionInList == -1) {
                     // creating a new task
                     DateFormat dateFormat = new SimpleDateFormat("HH:mm");
@@ -65,9 +61,21 @@ public class AddEditTaskActivity extends AppCompatActivity {
                     TaskManager.removeExpiredTasks();
                     Log.i("info: ", "ADDED NEW TASK");
                 } else {
-                    // editing a task
+                    // editing task
+                    TaskObject taskToEdit;
+                    // Get the existing task
+                    taskToEdit = TaskManager.getTaskObject(positionInList);
+
+                    // Remove the existing task from the queue
+                    TaskManager.removeTaskFromQueue(taskToEdit);
+
+                    // Update the task details
                     String title = editTextTaskContent.getText().toString();
-                    TaskManager.getTaskObject(positionInList).setTitle(title);
+                    taskToEdit.setTitle(title);
+                    // TODO: Update other properties of taskToEdit as necessary
+
+                    // Add the updated task back to the queue
+                    TaskManager.addTaskToQueue(taskToEdit);
                 }
                 goToTasksActivity();
             }
@@ -78,7 +86,13 @@ public class AddEditTaskActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (positionInList != -1) {
-                    TaskManager.removeTask(TaskManager.getTaskObject(positionInList));
+                    TaskObject taskToDelete = TaskManager.getTaskObject(positionInList);
+
+                    // Remove the task from the TaskManager
+                    TaskManager.removeTask(taskToDelete);
+
+                    // Also remove it from the queue
+                    TaskManager.removeTaskFromQueue(taskToDelete);
                 }
                 goToTasksActivity();
             }
