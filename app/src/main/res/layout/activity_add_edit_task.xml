@@ -6,23 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".AddEditTaskActivity">
 
-    <EditText
-        android:id="@+id/editTextTaskInput"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="47dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="47dp"
-        android:ems="10"
-        android:gravity="start|top"
-        android:hint="Title"
-        android:inputType="text"
-        app:layout_constraintBottom_toTopOf="@+id/headerStartDate"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <Button
         android:id="@+id/buttonSaveTask"
         android:layout_width="wrap_content"
@@ -32,8 +15,7 @@
         android:text="Save"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/buttonDeleteTask"
-        app:layout_constraintTop_toBottomOf="@+id/buttonSetTimeEnd" />
+        app:layout_constraintStart_toEndOf="@+id/buttonDeleteTask" />
 
     <Button
         android:id="@+id/buttonDeleteTask"
@@ -44,98 +26,131 @@
         android:text="Delete"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/buttonSaveTask"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/headerLocation" />
+
+    <EditText
+        android:id="@+id/headerLocation"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginEnd="36dp"
+        android:layout_marginBottom="226dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Location:"
+        app:layout_constraintBottom_toTopOf="@+id/buttonDeleteTask"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonSetDateEnd" />
 
     <Button
         android:id="@+id/buttonSetTimeStart"
         style="?android:spinnerStyle"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="35dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="42dp"
+        android:layout_marginEnd="22dp"
         android:layout_marginBottom="37dp"
         android:onClick="popStartTimePicker"
         android:text="1:45"
-        android:textColor="@color/black"
+        android:textColor="#A966CB"
         app:layout_constraintBottom_toTopOf="@+id/headerEndDate"
         app:layout_constraintEnd_toStartOf="@+id/buttonSetDateStart"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/headerStartDate" />
+        app:layout_constraintTop_toTopOf="@+id/headerStartDate" />
 
-    <Button
-        android:id="@+id/buttonSetTimeEnd"
-        style="?android:spinnerStyle"
+    <EditText
+        android:id="@+id/headerStartDate"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="35dp"
         android:layout_marginEnd="35dp"
-        android:layout_marginBottom="259dp"
-        android:onClick="popEndTimePicker"
-        android:text="2:45"
-        android:textColor="@color/black"
-        app:layout_constraintBottom_toTopOf="@+id/buttonSaveTask"
-        app:layout_constraintEnd_toStartOf="@+id/buttonSetDateEnd"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Start:"
+        app:layout_constraintBottom_toTopOf="@+id/buttonSetDateStart"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/headerEndDate" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextTaskInput" />
 
     <Button
         android:id="@+id/buttonSetDateStart"
         style="?android:spinnerStyle"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="3dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginBottom="3dp"
+        android:layout_marginEnd="39dp"
+        android:layout_marginBottom="40dp"
         android:onClick="popStartDatePicker"
         android:text="JAN 01 2020"
-        android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="@+id/buttonSetTimeStart"
+        android:textColor="#A966CB"
+        app:layout_constraintBottom_toTopOf="@+id/headerEndDate"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/buttonSetTimeStart"
-        app:layout_constraintTop_toTopOf="@+id/buttonSetTimeStart" />
+        app:layout_constraintTop_toBottomOf="@+id/headerStartDate" />
+
+    <EditText
+        android:id="@+id/headerEndDate"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginEnd="36dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text="End:"
+        app:layout_constraintBottom_toTopOf="@+id/buttonSetDateEnd"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonSetDateStart" />
+
+    <Button
+        android:id="@+id/buttonSetTimeEnd"
+        style="?android:spinnerStyle"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginEnd="27dp"
+        android:onClick="popEndTimePicker"
+        android:text="2:45"
+        android:textColor="#A966CB"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonSetDateEnd"
+        app:layout_constraintEnd_toStartOf="@+id/buttonSetDateEnd"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/headerEndDate" />
 
     <Button
         android:id="@+id/buttonSetDateEnd"
         style="?android:spinnerStyle"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginEnd="50dp"
+        android:layout_marginEnd="39dp"
+        android:layout_marginBottom="35dp"
         android:onClick="popEndDatePicker"
         android:text="JAN 01 2020"
-        android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="@+id/buttonSetTimeEnd"
+        android:textColor="#A966CB"
+        app:layout_constraintBottom_toTopOf="@+id/headerLocation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/buttonSetTimeEnd"
-        app:layout_constraintTop_toTopOf="@+id/buttonSetTimeEnd" />
+        app:layout_constraintTop_toBottomOf="@+id/headerEndDate" />
 
     <EditText
-        android:id="@+id/headerStartDate"
+        android:id="@+id/editTextTaskInput"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginEnd="4dp"
-        android:layout_marginBottom="12dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="45dp"
+        android:layout_marginEnd="35dp"
+        android:layout_marginBottom="25dp"
         android:ems="10"
+        android:gravity="start|top"
+        android:hint="Title"
         android:inputType="text"
-        android:text="Start Date:"
-        app:layout_constraintBottom_toTopOf="@+id/buttonSetTimeStart"
-        app:layout_constraintEnd_toEndOf="@+id/buttonSetDateStart"
-        app:layout_constraintStart_toStartOf="@+id/buttonSetTimeStart"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTaskInput" />
-
-    <EditText
-        android:id="@+id/headerEndDate"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginEnd="6dp"
-        android:layout_marginBottom="18dp"
-        android:ems="10"
-        android:inputType="text"
-        android:text="End Date:"
-        app:layout_constraintBottom_toTopOf="@+id/buttonSetTimeEnd"
-        app:layout_constraintEnd_toEndOf="@+id/buttonSetDateEnd"
-        app:layout_constraintStart_toStartOf="@+id/buttonSetTimeEnd"
-        app:layout_constraintTop_toBottomOf="@+id/buttonSetTimeStart" />
+        android:textColor="#A966CB"
+        app:layout_constraintBottom_toTopOf="@+id/headerStartDate"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

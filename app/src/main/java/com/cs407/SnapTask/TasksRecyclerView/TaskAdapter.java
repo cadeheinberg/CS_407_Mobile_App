@@ -48,20 +48,20 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskInListViewHolder> {
     
     @Override
     public void onBindViewHolder(@NonNull TaskInListViewHolder holder, int position) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("-dd HH:mm", Locale.getDefault());
         holder.title.setText(taskObjects.get(position).getTitle());
         holder.checkbox.setChecked(taskObjects.get(position).isChecked());
         holder.locationName.setText(taskObjects.get(position).getLocationName());
         Date startDate = taskObjects.get(position).getStartDate();
         if (startDate != null) {
-            holder.startDate.setText(dateFormat.format(startDate));
+            holder.startDate.setText(getMonthFormat(taskObjects.get(position).getStartDate().getMonth()) + dateFormat.format(startDate));
         } else {
             holder.startDate.setText("Any Time");
         }
         
         Date endDate = taskObjects.get(position).getEndDate();
         if (endDate != null) {
-            holder.endDate.setText(dateFormat.format(endDate));
+            holder.endDate.setText(getMonthFormat(taskObjects.get(position).getEndDate().getMonth()) + dateFormat.format(endDate));
         } else {
             holder.endDate.setText("Any Time");
         }
@@ -75,5 +75,36 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskInListViewHolder> {
     public void updateTasks(List<TaskObject> taskObjects) {
         this.taskObjects = taskObjects;
         notifyDataSetChanged();
+    }
+
+    private String getMonthFormat(int month)
+    {
+        if(month == 0)
+            return "JAN";
+        if(month == 1)
+            return "FEB";
+        if(month == 2)
+            return "MAR";
+        if(month == 3)
+            return "APR";
+        if(month == 4)
+            return "MAY";
+        if(month == 5)
+            return "JUN";
+        if(month == 6)
+            return "JUL";
+        if(month == 7)
+            return "AUG";
+        if(month == 8)
+            return "SEP";
+        if(month == 9)
+            return "OCT";
+        if(month == 10)
+            return "NOV";
+        if(month == 11)
+            return "DEC";
+
+        //default should never happen
+        return "JAN";
     }
 }
