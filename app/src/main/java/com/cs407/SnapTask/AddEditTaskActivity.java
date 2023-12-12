@@ -63,13 +63,15 @@ public class AddEditTaskActivity extends AppCompatActivity {
                     String locationAddress = "54312 Main St Chicago Illinois";
                     String title = editTextTaskContent.getText().toString();
                     String description = "No description yet";
+                    String photoLink = "";
                     TaskObject newTask = TaskManager.addTask(false, // creates task, adds it to manager, and returns it
                             foundUsername,
                             startDateChosen, endDateChosen,
                             locationName,
                             locationAddress,
                             title,
-                            description);
+                            description,
+                            photoLink);
                     TaskManager.removeExpiredTasks();
                     Log.i("info: ", "ADDED NEW TASK");
                 } else {
@@ -88,17 +90,17 @@ public class AddEditTaskActivity extends AppCompatActivity {
                 goToTasksActivity();
             }
         });
-
+        
         Button deleteButton = (Button) findViewById(R.id.buttonDeleteTask);
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (positionInList != -1) {
                     TaskObject taskToDelete = TaskManager.getTaskObject(positionInList);
-
+                    
                     // Remove the task from the TaskManager
                     TaskManager.removeTask(taskToDelete);
-
+                    
                     // Also remove it from the queue
                     TaskManager.removeTaskFromQueue(taskToDelete);
                 }
@@ -112,6 +114,7 @@ public class AddEditTaskActivity extends AppCompatActivity {
         DatePickerDialog.OnDateSetListener startDateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int day) {
+                month = month + 1;
                 String date = makeDateString(day, month, year);
                 startDateButton.setText(date);
                 startDateChosen.setDate(day);
@@ -200,7 +203,7 @@ public class AddEditTaskActivity extends AppCompatActivity {
         TimePickerDialog timePickerDialog = new TimePickerDialog(this, style, onTimeSetListener, endDateChosen.getHours(), endDateChosen.getMinutes(), true);
         timePickerDialog.show();
     }
-
+    
     private String makeDateString(int day, int month, int year) {
         return getMonthFormat(month) + " " + day + " " + year;
     }
@@ -236,7 +239,7 @@ public class AddEditTaskActivity extends AppCompatActivity {
             return "NOV";
         if(month == 11)
             return "DEC";
-
+        
         //default should never happen
         return "JAN";
     }
@@ -244,8 +247,8 @@ public class AddEditTaskActivity extends AppCompatActivity {
     public void popStartDatePicker(View view) {
         startDatePickerDialog.show();
     }
-
-    public void popEndDatePicker(View view){
+    
+    public void popEndDatePicker(View view) {
         endDatePickerDialog.show();
     }
 }

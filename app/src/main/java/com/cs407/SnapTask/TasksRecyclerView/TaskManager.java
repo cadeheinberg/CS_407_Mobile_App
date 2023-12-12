@@ -17,35 +17,35 @@ import java.util.List;
 import java.util.PriorityQueue;
 
 public class TaskManager {
-
+    
     private static PriorityQueue<TaskObject> taskQueue = new PriorityQueue<TaskObject>();
     private static DatabaseHandler db;
     private static ArrayList<TaskObject> tasksList;
     private static int nextId = 1;
-
+    
     // add a task to the queue
     public static void addTaskToQueue(TaskObject task) {
         taskQueue.add(task);
     }
-
+    
     // remove a task from the queue (after completion)
     public static void removeTaskFromQueue(TaskObject task) {
         taskQueue.remove(task);
     }
-
+    
     // get the next task from the queue
     public static TaskObject getNextTask() {
         return taskQueue.peek();
     }
-
-    public static TaskObject getTaskFromQueueWithID(int id){
+    
+    public static TaskObject getTaskFromQueueWithID(int id) {
         return (TaskObject) taskQueue.toArray()[id];
     }
-
-    public static int getSizeOfTaskQueue(){
+    
+    public static int getSizeOfTaskQueue() {
         return taskQueue.size();
     }
-
+    
     // call this every minute or however often we want to update the queue based on if
     // its due date is passed
     public static void removeExpiredTasks() {
@@ -55,7 +55,7 @@ public class TaskManager {
 //                // If endDate is null, it means the task is set for "Any Time"
 //                break;
 //            }
-
+            
             if (task.getEndDate() != null && task.getEndDate().before(new Date())) {
                 taskQueue.poll(); // Removes the expired task
             } else {
@@ -63,7 +63,7 @@ public class TaskManager {
             }
         }
     }
-
+    
     public static void initializeManager(Context setterContext, Activity setterActivity) {
         tasksList = new ArrayList<>();
     }
@@ -74,21 +74,21 @@ public class TaskManager {
         }
         return false;
     }
-
+    
     // changed from void to returning the created task
-    public static TaskObject addTask(boolean checked, String username, Date startDate, Date endDate, String locationName, String locationAddress, String title, String description) {
+    public static TaskObject addTask(boolean checked, String username, Date startDate, Date endDate, String locationName, String locationAddress, String title, String description, String photoLink) {
         nextId = nextId + 1;
-        TaskObject taskObject = new TaskObject(nextId, checked, username, startDate, endDate, locationName, locationAddress, title, description);
+        TaskObject taskObject = new TaskObject(nextId, checked, username, startDate, endDate, locationName, locationAddress, title, description, photoLink);
         tasksList.add(taskObject);
         
         Log.i("Info ", taskObject.getTitle());
         
         // Updating the database and RecyclerView to show changes
         db.addTaskToDatabase(taskObject);
-
+        
         addTaskToQueue(taskObject);
         removeExpiredTasks();
-        return(taskObject);
+        return (taskObject);
     }
     
     public static void removeTask(TaskObject taskObject) {
@@ -99,6 +99,7 @@ public class TaskManager {
     }
     
     public static void modifiedTask(TaskObject taskObject) {
+        Log.i("Info", "Task modified");
         db.updateTaskInDatabase(taskObject);
     }
     
