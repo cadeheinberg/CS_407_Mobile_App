@@ -21,6 +21,7 @@ import java.util.ArrayList;
 public class GalleryActivity extends AppCompatActivity {
     
     ListView galleryListView;
+    ArrayList<String> fileNames = new ArrayList<>();
     ArrayList<Bitmap> thumbnails = new ArrayList<>();
     ListAdapter listAdapter;
     
@@ -45,7 +46,7 @@ public class GalleryActivity extends AppCompatActivity {
         });
         
         galleryListView = findViewById(R.id.galleryListView);
-        listAdapter = new ListAdapter(GalleryActivity.this, thumbnails);
+        listAdapter = new ListAdapter(GalleryActivity.this, thumbnails, fileNames);
         galleryListView.setAdapter(listAdapter);
     }
     
@@ -55,11 +56,15 @@ public class GalleryActivity extends AppCompatActivity {
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         Log.i("Info", "storageDir: " + storageDir.toString());
         File[] pictures = storageDir.listFiles();
+        fileNames.clear();
         thumbnails.clear();
         for (File picture : pictures) {
             if (picture == null) {
                 break;
             }
+            String fileName = picture.getName();
+            Log.i("Info", "gallery photo name: " + fileName);
+            fileNames.add(fileName);
             Matrix matrix = new Matrix();
             matrix.postRotate(90);
             Bitmap photoBitmap = BitmapFactory.decodeFile(picture.getAbsolutePath());

@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.cs407.SnapTask.TasksRecyclerView.TaskObject;
@@ -13,7 +12,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 public class DatabaseHandler {
@@ -31,12 +29,11 @@ public class DatabaseHandler {
     private static final String DESCRIPTION = "description";
     private static final String PHOTO_LINK = "photo_link";
     private static SQLiteDatabase sqLiteDatabase;
-    private String currentUsername;
+    private final String currentUsername;
     
     public DatabaseHandler(Context context, String username) {
         if (sqLiteDatabase == null) {
-            SQLiteDatabase sqLiteDatabase = context.openOrCreateDatabase(DATABASE_NAME, Context.MODE_PRIVATE, null);
-            this.sqLiteDatabase = sqLiteDatabase;
+            this.sqLiteDatabase = context.openOrCreateDatabase(DATABASE_NAME, Context.MODE_PRIVATE, null);
         }
         this.currentUsername = username;
     }
@@ -143,16 +140,20 @@ public class DatabaseHandler {
         sqLiteDatabase.update(TABLE_NAME, cv, ID + "=? and " + USERNAME + "=?", new String[]{String.valueOf(task.getId()), task.getUsername()});
     }
     
+    public TaskObject fileNameSearchDatabase(String fileName) {
+        // TODO: fix this search feature
+        Log.i("Info", "querying");
+        TaskObject foundTask = new TaskObject(0, false, "", null, null, "", "", "Title", "description", "");
+        return foundTask;
+    }
+    
     public void deleteTaskFromDatabase(TaskObject task) {
         createTableInDatabase();
         sqLiteDatabase.delete(TABLE_NAME, ID + "=? and " + USERNAME + "=?", new String[]{String.valueOf(task.getId()), task.getUsername()});
     }
     
     private boolean intToBoolean(int n) {
-        if (n == 1) {
-            return true;
-        }
-        return false;
+        return n == 1;
     }
     
     private int booleanToInt(boolean b) {

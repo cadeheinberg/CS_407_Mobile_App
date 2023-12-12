@@ -4,12 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.cs407.SnapTask.Database.DatabaseHandler;
-import com.cs407.SnapTask.R;
-import com.cs407.SnapTask.TasksActivity;
 
 import java.util.Date;
 import java.util.ArrayList;
@@ -18,7 +13,7 @@ import java.util.PriorityQueue;
 
 public class TaskManager {
     
-    private static PriorityQueue<TaskObject> taskQueue = new PriorityQueue<TaskObject>();
+    private static final PriorityQueue<TaskObject> taskQueue = new PriorityQueue<>();
     private static DatabaseHandler db;
     private static ArrayList<TaskObject> tasksList;
     private static int nextId = 1;
@@ -69,10 +64,7 @@ public class TaskManager {
     }
     
     public static boolean isNull() {
-        if (tasksList == null) {
-            return true;
-        }
-        return false;
+        return tasksList == null;
     }
     
     // changed from void to returning the created task
@@ -128,5 +120,10 @@ public class TaskManager {
     
     public static TaskObject getTaskObject(int position) {
         return tasksList.get(position);
+    }
+    
+    public static TaskObject getTaskByFileName(String fileName) {
+        Log.i("Info", "in taskmanager");
+        return db.fileNameSearchDatabase(fileName);
     }
 }

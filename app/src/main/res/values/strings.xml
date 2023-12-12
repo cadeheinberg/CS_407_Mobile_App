@@ -11,4 +11,5 @@
     <string name="camera_title">Camera</string>
     <string name="gallery_title">Gallery</string>
     <string name="settings_title">Settings</string>
+    <string name="thumbnail">Thumbnail</string>
 </resources>
