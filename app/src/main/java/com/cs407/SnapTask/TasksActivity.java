@@ -35,7 +35,7 @@ public class TasksActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tasks);
         //getSupportActionBar().hide();
-        getSupportActionBar().setTitle("Today");
+        getSupportActionBar().setTitle("Tasks");
         
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.getMenu().findItem(R.id.nav_tasks).setChecked(true);

@@ -18,7 +18,8 @@
             android:id="@+id/taskToDoCheckBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:buttonTint="@android:color/holo_purple" />
+            android:buttonTint="@android:color/holo_purple"
+            android:layout_marginTop="5dp"/>
 
         <TextView
             android:id="@+id/taskTitleText"
@@ -43,23 +44,12 @@
             android:textSize="12sp" />
 
         <TextView
-            android:id="@+id/taskLocationDivider"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=":"
-            android:background="@null"
-            android:layout_toEndOf="@+id/taskLocationName"
-            android:layout_below="@id/taskTitleText"
-            android:textSize="12sp"
-            android:textColor="#8030B8" />
-
-        <TextView
             android:id="@+id/taskStartDateText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/taskTitleText"
-            android:layout_marginLeft="4dp"
-            android:layout_toEndOf="@+id/taskLocationDivider"
+            android:layout_below="@id/taskLocationName"
+            android:layout_marginLeft="0dp"
+            android:layout_toEndOf="@+id/taskToDoCheckBox"
             android:background="@null"
             android:text="@string/sample_text"
             android:textColor="#8030B8"
@@ -69,11 +59,11 @@
             android:id="@+id/taskDateDivider"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/taskTitleText"
+            android:layout_below="@id/taskLocationName"
             android:layout_marginLeft="4dp"
             android:layout_toEndOf="@+id/taskStartDateText"
             android:background="@null"
-            android:text="-"
+            android:text="->"
             android:textColor="#8030B8"
             android:textSize="12sp" />
 
@@ -81,7 +71,7 @@
             android:id="@+id/taskEndDateText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/taskTitleText"
+            android:layout_below="@id/taskLocationName"
             android:layout_marginLeft="4dp"
             android:layout_toEndOf="@+id/taskDateDivider"
             android:background="@null"

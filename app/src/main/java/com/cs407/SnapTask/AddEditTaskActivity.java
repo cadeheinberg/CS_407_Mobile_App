@@ -7,7 +7,6 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,66 +16,49 @@ import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.cs407.SnapTask.Database.DatabaseHandler;
 import com.cs407.SnapTask.TasksRecyclerView.TaskManager;
 import com.cs407.SnapTask.TasksRecyclerView.TaskObject;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
 public class AddEditTaskActivity extends AppCompatActivity {
 
-    Button startTimeButton, endTimeButton;
-    int startHour, startMinute, endHour, endMinute = -1;
-
     private DatePickerDialog startDatePickerDialog, endDatePickerDialog;
-    private Button startDateButton, endDateButton;
-    private Date startDateChosen, endDateChosen = new Date();
+    private Button startTimeButton, endTimeButton, startDateButton, endDateButton;
+    private Date startDateChosen, endDateChosen;
+    private TaskObject currentTaskObject;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_edit_task);
-        EditText editTextTaskContent = findViewById(R.id.editTextTaskInput);
-
         startTimeButton = findViewById(R.id.buttonSetTimeStart);
-        endTimeButton = findViewById(R.id.buttonSetTimeEnd);
-        startDateChosen = new Date();
-
         startDateButton = findViewById(R.id.buttonSetDateStart);
+        endTimeButton = findViewById(R.id.buttonSetTimeEnd);
         endDateButton = findViewById(R.id.buttonSetDateEnd);
-        endDateChosen = new Date();
-        initDatePickers();
+        initEditMenu();
+        initDateTimePickers();
+    }
 
+    private void initEditMenu() {
+        EditText editTextTaskContent = findViewById(R.id.editTextTaskInput);
         String foundUsername = getSharedPreferences("SnapTask", Context.MODE_PRIVATE).getString("username", "");
         Intent intent = getIntent();
         int positionInList = intent.getIntExtra("positionInList", -1);
-        TaskObject taskObject = null;
+        currentTaskObject = null;
         if (positionInList != -1) {
-            taskObject = TaskManager.getTaskObject(positionInList);
-            editTextTaskContent.setText(taskObject.getTitle());
+            currentTaskObject = TaskManager.getTaskObject(positionInList);
+            editTextTaskContent.setText(currentTaskObject.getTitle());
         }
+
         Button saveButton = findViewById(R.id.buttonSaveTask);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (positionInList == -1) {
-                    // creating a new task
-                    // DateFormat dateFormat = new SimpleDateFormat("HH:mm");
-                    // String startStrDate = dateFormat.format(new Date());
-                    // endDate.setTime(new Date().getTime() + 3600000);
-                    // String endStrDate = dateFormat.format(endDate); // remove notnull tag from parameter if used
-                    if(startHour == -1 || startMinute == -1){
-                        Toast.makeText(AddEditTaskActivity.this, "Select A Start Time", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                    if(endHour == -1 || endMinute == -1){
-                        Toast.makeText(AddEditTaskActivity.this, "Select A Start Time", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
+                    // make a new task
                     String locationName = "Starbucks";
                     String locationAddress = "54312 Main St Chicago Illinois";
                     String title = editTextTaskContent.getText().toString();
@@ -91,27 +73,22 @@ public class AddEditTaskActivity extends AppCompatActivity {
                     TaskManager.removeExpiredTasks();
                     Log.i("info: ", "ADDED NEW TASK");
                 } else {
-                    // editing task
-                    TaskObject taskToEdit;
-                    // Get the existing task
-                    taskToEdit = TaskManager.getTaskObject(positionInList);
-
                     // Remove the existing task from the queue
-                    TaskManager.removeTaskFromQueue(taskToEdit);
-
+                    TaskManager.removeTaskFromQueue(currentTaskObject);
                     // Update the task details
                     String title = editTextTaskContent.getText().toString();
-                    taskToEdit.setTitle(title);
+                    currentTaskObject.setTitle(title);
+                    currentTaskObject.setStartDate(startDateChosen);
+                    currentTaskObject.setEndDate(endDateChosen);
                     // TODO: Update other properties of taskToEdit as necessary
-
                     // Add the updated task back to the queue
-                    TaskManager.addTaskToQueue(taskToEdit);
+                    TaskManager.addTaskToQueue(currentTaskObject);
                     TaskManager.removeExpiredTasks();
                 }
                 goToTasksActivity();
             }
         });
-        
+
         Button deleteButton = (Button) findViewById(R.id.buttonDeleteTask);
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,20 +107,11 @@ public class AddEditTaskActivity extends AppCompatActivity {
         });
     }
 
-    private void setTodaysDateInPickers() {
-        startDateButton.setText(makeDateString(startDateChosen.getDate(), startDateChosen.getMonth(), startDateChosen.getYear()));
-        endDateButton.setText(makeDateString(endDateChosen.getDate(), endDateChosen.getMonth(), endDateChosen.getYear()));
-        startTimeButton.setText(String.format(Locale.getDefault(), "%02d:%02d", startDateChosen.getHours(), endDateChosen.getMinutes()));
-        endTimeButton.setText(String.format(Locale.getDefault(), "%02d:%02d", endDateChosen.getHours() + 1, endDateChosen.getMinutes()));
-    }
-
-    private void initDatePickers() {
+    private void initDateTimePickers() {
         int style = AlertDialog.THEME_HOLO_DARK;
-
         DatePickerDialog.OnDateSetListener startDateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int day) {
-                month = month + 1;
                 String date = makeDateString(day, month, year);
                 startDateButton.setText(date);
                 startDateChosen.setDate(day);
@@ -151,19 +119,28 @@ public class AddEditTaskActivity extends AppCompatActivity {
                 startDateChosen.setYear(year);
             }
         };
-        Calendar startCal = Calendar.getInstance();
-        int startYear = startCal.get(Calendar.YEAR);
-        int startMonth = startCal.get(Calendar.MONTH);
-        int startDay = startCal.get(Calendar.DAY_OF_MONTH);
-        startDateChosen.setDate(startDay);
-        startDateChosen.setMonth(startMonth);
-        startDateChosen.setYear(startYear);
-        startDatePickerDialog = new DatePickerDialog(this, style, startDateSetListener, startYear, startMonth, startDay);
+        if (currentTaskObject != null) {
+            startDateChosen = currentTaskObject.getStartDate();
+        }
+        else {
+            startDateChosen = new Date();
+            Calendar startCal = Calendar.getInstance();
+            int startHour = startCal.get(Calendar.HOUR);
+            int startMinute = startCal.get(Calendar.MINUTE);
+            int startYear = startCal.get(Calendar.YEAR);
+            int startMonth = startCal.get(Calendar.MONTH);
+            int startDay = startCal.get(Calendar.DAY_OF_MONTH);
+            startDateChosen.setHours(startHour);
+            startDateChosen.setMinutes(startMinute);
+            startDateChosen.setDate(startDay);
+            startDateChosen.setMonth(startMonth);
+            startDateChosen.setYear(startYear);
+        }
+        startDatePickerDialog = new DatePickerDialog(this, style, startDateSetListener, startDateChosen.getYear(), startDateChosen.getMonth(), startDateChosen.getDate());
 
         DatePickerDialog.OnDateSetListener endDateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int day) {
-                month = month + 1;
                 String date = makeDateString(day, month, year);
                 endDateButton.setText(date);
                 endDateChosen.setDate(day);
@@ -171,72 +148,42 @@ public class AddEditTaskActivity extends AppCompatActivity {
                 endDateChosen.setYear(year);
             }
         };
-        Calendar endCal = Calendar.getInstance();
-        int endYear = endCal.get(Calendar.YEAR);
-        int endMonth = endCal.get(Calendar.MONTH);
-        int endDay = endCal.get(Calendar.DAY_OF_MONTH);
-        endDateChosen.setDate(endDay);
-        endDateChosen.setMonth(endMonth);
-        endDateChosen.setYear(endYear);
-        endDatePickerDialog = new DatePickerDialog(this, style, endDateSetListener, endYear, endMonth, endDay);
+        if (currentTaskObject != null) {
+            endDateChosen = currentTaskObject.getEndDate();
+        }
+        else {
+            endDateChosen = new Date();
+            Calendar endCal = Calendar.getInstance();
+            int endHour = endCal.get(Calendar.HOUR) + 1;
+            int endMinute = endCal.get(Calendar.MINUTE);
+            int endYear = endCal.get(Calendar.YEAR);
+            int endMonth = endCal.get(Calendar.MONTH);
+            int endDay = endCal.get(Calendar.DAY_OF_MONTH);
+            endDateChosen.setHours(endHour);
+            endDateChosen.setMinutes(endMinute);
+            endDateChosen.setDate(endDay);
+            endDateChosen.setMonth(endMonth);
+            endDateChosen.setYear(endYear);
+        }
+        endDatePickerDialog = new DatePickerDialog(this, style, endDateSetListener, endDateChosen.getYear(), endDateChosen.getMonth(), endDateChosen.getDate());
 
-        setTodaysDateInPickers();
-    }
-
-    private String makeDateString(int day, int month, int year) {
-        return getMonthFormat(month) + " " + day + " " + year;
-    }
-
-    private String getMonthFormat(int month)
-    {
-        if(month == 1)
-            return "JAN";
-        if(month == 2)
-            return "FEB";
-        if(month == 3)
-            return "MAR";
-        if(month == 4)
-            return "APR";
-        if(month == 5)
-            return "MAY";
-        if(month == 6)
-            return "JUN";
-        if(month == 7)
-            return "JUL";
-        if(month == 8)
-            return "AUG";
-        if(month == 9)
-            return "SEP";
-        if(month == 10)
-            return "OCT";
-        if(month == 11)
-            return "NOV";
-        if(month == 12)
-            return "DEC";
-
-        //default should never happen
-        return "JAN";
-    }
-
-    private void goToTasksActivity() {
-        Intent intent = new Intent(this, TasksActivity.class);
-        startActivity(intent);
+        startDateButton.setText(makeDateString(startDateChosen.getDate(), startDateChosen.getMonth(), startDateChosen.getYear()));
+        endDateButton.setText(makeDateString(endDateChosen.getDate(), endDateChosen.getMonth(), endDateChosen.getYear()));
+        startTimeButton.setText(String.format(Locale.getDefault(), "%02d:%02d", startDateChosen.getHours(), startDateChosen.getMinutes()));
+        endTimeButton.setText(String.format(Locale.getDefault(), "%02d:%02d", endDateChosen.getHours(), endDateChosen.getMinutes()));
     }
 
     public void popStartTimePicker(View view) {
         TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                startHour = hourOfDay;
-                startMinute = minute;
-                startTimeButton.setText(String.format(Locale.getDefault(), "%02d:%02d", startHour, startMinute));
-                startDateChosen.setHours(startHour);
-                startDateChosen.setMinutes(startMinute);
+                startTimeButton.setText(String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute));
+                startDateChosen.setHours(hourOfDay);
+                startDateChosen.setMinutes(minute);
             }
         };
         int style = AlertDialog.THEME_HOLO_DARK;
-
-        TimePickerDialog timePickerDialog = new TimePickerDialog(this, style, onTimeSetListener, startHour, startMinute, true);
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this, style, onTimeSetListener, startDateChosen.getHours(), startDateChosen.getMinutes(), true);
         timePickerDialog.show();
     }
 
@@ -244,17 +191,54 @@ public class AddEditTaskActivity extends AppCompatActivity {
         TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                endHour = hourOfDay;
-                endMinute = minute;
-                endTimeButton.setText(String.format(Locale.getDefault(), "%02d:%02d", endHour, endMinute));
-                endDateChosen.setHours(endHour);
-                endDateChosen.setMinutes(endMinute);
+                endTimeButton.setText(String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute));
+                endDateChosen.setHours(hourOfDay);
+                endDateChosen.setMinutes(minute);
             }
         };
         int style = AlertDialog.THEME_HOLO_DARK;
-
-        TimePickerDialog timePickerDialog = new TimePickerDialog(this, style, onTimeSetListener, endHour, endMinute, true);
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this, style, onTimeSetListener, endDateChosen.getHours(), endDateChosen.getMinutes(), true);
         timePickerDialog.show();
+    }
+
+    private String makeDateString(int day, int month, int year) {
+        return getMonthFormat(month) + " " + day + " " + year;
+    }
+
+    private void goToTasksActivity() {
+        Intent intent = new Intent(this, TasksActivity.class);
+        startActivity(intent);
+    }
+
+    private String getMonthFormat(int month)
+    {
+        if(month == 0)
+            return "JAN";
+        if(month == 1)
+            return "FEB";
+        if(month == 2)
+            return "MAR";
+        if(month == 3)
+            return "APR";
+        if(month == 4)
+            return "MAY";
+        if(month == 5)
+            return "JUN";
+        if(month == 6)
+            return "JUL";
+        if(month == 7)
+            return "AUG";
+        if(month == 8)
+            return "SEP";
+        if(month == 9)
+            return "OCT";
+        if(month == 10)
+            return "NOV";
+        if(month == 11)
+            return "DEC";
+
+        //default should never happen
+        return "JAN";
     }
 
     public void popStartDatePicker(View view) {
