@@ -1,7 +1,6 @@
 package com.cs407.SnapTask;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -14,11 +13,8 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
-import android.widget.Toast;
-
 import com.cs407.SnapTask.TasksRecyclerView.TaskManager;
 import com.cs407.SnapTask.TasksRecyclerView.TaskObject;
-
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -59,7 +55,7 @@ public class AddEditTaskActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (positionInList == -1) {
                     // make a new task
-                    String locationName = "Starbucks";
+                    String locationName = "placeholder";
                     String locationAddress = "54312 Main St Chicago Illinois";
                     String title = editTextTaskContent.getText().toString();
                     String description = "No description yet";
@@ -114,7 +110,6 @@ public class AddEditTaskActivity extends AppCompatActivity {
         DatePickerDialog.OnDateSetListener startDateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int day) {
-                month = month + 1;
                 String date = makeDateString(day, month, year);
                 startDateButton.setText(date);
                 startDateChosen.setDate(day);

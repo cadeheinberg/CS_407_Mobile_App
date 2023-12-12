@@ -66,8 +66,6 @@ public class CameraActivity extends AppCompatActivity implements ImageAnalysis.A
                 startActivity(new Intent(this, TasksActivity.class));
             } else if (itemId == R.id.nav_gallery) {
                 startActivity(new Intent(this, GalleryActivity.class));
-            } else if (itemId == R.id.nav_settings) {
-                startActivity(new Intent(this, SettingsActivity.class));
             }
             return true;
         });
@@ -140,8 +138,8 @@ public class CameraActivity extends AppCompatActivity implements ImageAnalysis.A
     
     private String formatDateTime(Date date) {
         if (date != null) {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
-            return dateFormat.format(date);
+            SimpleDateFormat dateFormat = new SimpleDateFormat("-dd HH:mm", Locale.getDefault());
+            return getMonthFormat(date.getMonth()) + dateFormat.format(date);
         } else {
             return "Any Time";
         }
@@ -239,5 +237,36 @@ public class CameraActivity extends AppCompatActivity implements ImageAnalysis.A
         // image processing here for the current frame
         Log.d("TAG", "analyze: got the frame at: " + image.getImageInfo().getTimestamp());
         image.close();
+    }
+
+    private String getMonthFormat(int month)
+    {
+        if(month == 0)
+            return "JAN";
+        if(month == 1)
+            return "FEB";
+        if(month == 2)
+            return "MAR";
+        if(month == 3)
+            return "APR";
+        if(month == 4)
+            return "MAY";
+        if(month == 5)
+            return "JUN";
+        if(month == 6)
+            return "JUL";
+        if(month == 7)
+            return "AUG";
+        if(month == 8)
+            return "SEP";
+        if(month == 9)
+            return "OCT";
+        if(month == 10)
+            return "NOV";
+        if(month == 11)
+            return "DEC";
+
+        //default should never happen
+        return "JAN";
     }
 }

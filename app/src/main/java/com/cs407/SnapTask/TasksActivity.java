@@ -13,8 +13,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -29,7 +27,9 @@ public class TasksActivity extends AppCompatActivity {
     
     private static final int PERMISSIONS_REQUEST_WRITE = 43;
     private static final int PERMISSIONS_REQUEST_READ = 44;
-    
+
+    private static final int ERROR_DIALOG_REQUEST = 9001;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,8 +45,6 @@ public class TasksActivity extends AppCompatActivity {
                 startActivity(new Intent(this, CameraActivity.class));
             } else if (itemId == R.id.nav_gallery) {
                 startActivity(new Intent(this, GalleryActivity.class));
-            } else if (itemId == R.id.nav_settings) {
-                startActivity(new Intent(this, SettingsActivity.class));
             }
             return true;
         });
@@ -79,6 +77,7 @@ public class TasksActivity extends AppCompatActivity {
             // Permission is not granted
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSIONS_REQUEST_READ);
         }
+
     }
     
     // TODO: update toasts
