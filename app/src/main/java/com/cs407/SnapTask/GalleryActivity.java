@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ListView;
 
@@ -52,6 +53,7 @@ public class GalleryActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        Log.i("Info", "storageDir: " + storageDir.toString());
         File[] pictures = storageDir.listFiles();
         thumbnails.clear();
         for (File picture : pictures) {
