@@ -51,7 +51,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskInListViewHolder> {
         SimpleDateFormat dateFormat = new SimpleDateFormat("-dd HH:mm", Locale.getDefault());
         holder.title.setText(taskObjects.get(position).getTitle());
         holder.checkbox.setChecked(taskObjects.get(position).isChecked());
-        holder.locationName.setText(taskObjects.get(position).getLocationName());
+//        holder.locationName.setText(taskObjects.get(position).getLocationName());
         Date startDate = taskObjects.get(position).getStartDate();
         if (startDate != null) {
             holder.startDate.setText(getMonthFormat(taskObjects.get(position).getStartDate().getMonth()) + dateFormat.format(startDate));

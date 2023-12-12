@@ -39,8 +39,6 @@ public class GalleryActivity extends AppCompatActivity {
                 startActivity(new Intent(this, TasksActivity.class));
             } else if (itemId == R.id.nav_camera) {
                 startActivity(new Intent(this, CameraActivity.class));
-            } else if (itemId == R.id.nav_settings) {
-                startActivity(new Intent(this, SettingsActivity.class));
             }
             return true;
         });
