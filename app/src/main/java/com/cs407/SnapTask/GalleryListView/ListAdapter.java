@@ -13,7 +13,10 @@ import com.cs407.SnapTask.R;
 import com.cs407.SnapTask.TasksRecyclerView.TaskManager;
 import com.cs407.SnapTask.TasksRecyclerView.TaskObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 public class ListAdapter extends BaseAdapter {
     Context context;
@@ -53,8 +56,48 @@ public class ListAdapter extends BaseAdapter {
         TaskObject currentTask = TaskManager.getTaskByFileName(fileNames.get(position));
         // update task info
         TextView taskInfo = view.findViewById(R.id.taskInfo);
-        String taskInfoText = currentTask.getTitle() + "\n" + currentTask.getDescription() + "\n" + currentTask.getEndDate();
+        String taskInfoText = currentTask.getTitle()  + "\n" + formatDateTime(currentTask.getEndDate());
         taskInfo.setText(taskInfoText);
         return view;
+    }
+
+    private String formatDateTime(Date date) {
+        if (date != null) {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("-dd HH:mm", Locale.getDefault());
+            return getMonthFormat(date.getMonth()) + dateFormat.format(date);
+        } else {
+            return "Any Time";
+        }
+    }
+
+    private String getMonthFormat(int month)
+    {
+        if(month == 0)
+            return "JAN";
+        if(month == 1)
+            return "FEB";
+        if(month == 2)
+            return "MAR";
+        if(month == 3)
+            return "APR";
+        if(month == 4)
+            return "MAY";
+        if(month == 5)
+            return "JUN";
+        if(month == 6)
+            return "JUL";
+        if(month == 7)
+            return "AUG";
+        if(month == 8)
+            return "SEP";
+        if(month == 9)
+            return "OCT";
+        if(month == 10)
+            return "NOV";
+        if(month == 11)
+            return "DEC";
+
+        //default should never happen
+        return "JAN";
     }
 }

@@ -123,7 +123,11 @@ public class TaskManager {
     }
     
     public static TaskObject getTaskByFileName(String fileName) {
-        Log.i("Info", "in taskmanager");
-        return db.fileNameSearchDatabase(fileName);
+        for (TaskObject task : tasksList){
+            if (task.getPhotoLink().equals(fileName)){
+                return task;
+            }
+        }
+        return null;
     }
 }

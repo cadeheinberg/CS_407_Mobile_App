@@ -140,13 +140,6 @@ public class DatabaseHandler {
         sqLiteDatabase.update(TABLE_NAME, cv, ID + "=? and " + USERNAME + "=?", new String[]{String.valueOf(task.getId()), task.getUsername()});
     }
     
-    public TaskObject fileNameSearchDatabase(String fileName) {
-        // TODO: fix this search feature
-        Log.i("Info", "querying");
-        TaskObject foundTask = new TaskObject(0, false, "", null, null, "", "", "Title", "description", "");
-        return foundTask;
-    }
-    
     public void deleteTaskFromDatabase(TaskObject task) {
         createTableInDatabase();
         sqLiteDatabase.delete(TABLE_NAME, ID + "=? and " + USERNAME + "=?", new String[]{String.valueOf(task.getId()), task.getUsername()});
