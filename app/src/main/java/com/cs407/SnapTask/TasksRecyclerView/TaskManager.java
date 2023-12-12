@@ -99,6 +99,7 @@ public class TaskManager {
     }
     
     public static void modifiedTask(TaskObject taskObject) {
+        Log.i("Info", "Task modified");
         db.updateTaskInDatabase(taskObject);
     }
     

@@ -45,12 +45,10 @@ import java.util.concurrent.Executor;
 
 public class CameraActivity extends AppCompatActivity implements ImageAnalysis.Analyzer, View.OnClickListener {
     private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
-    
-    PreviewView previewView;
+    private PreviewView previewView;
     private ImageCapture imageCapture;
-
+    private TaskObject currentTask;
     int current_task_being_shown;
-
     
     //could use any number for these
     private static final int PERMISSIONS_REQUEST_CAMERA = 42;
@@ -85,7 +83,7 @@ public class CameraActivity extends AppCompatActivity implements ImageAnalysis.A
         Button pictureButton = findViewById(R.id.pictureButton);
         
         pictureButton.setOnClickListener(this);
-
+        
         cameraProviderFuture = ProcessCameraProvider.getInstance(this);
         cameraProviderFuture.addListener(() -> {
             try {
@@ -97,15 +95,14 @@ public class CameraActivity extends AppCompatActivity implements ImageAnalysis.A
         }, getExecutor());
         
     }
-
+    
     @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
+    public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.next_task, menu);
         return true;
     }
-
+    
     // called whenever an item in your options menu is selected
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -115,10 +112,10 @@ public class CameraActivity extends AppCompatActivity implements ImageAnalysis.A
         }
         return true;
     }
-
+    
     private void displayNextTask() {
         current_task_being_shown = (current_task_being_shown + 1) % TaskManager.getSizeOfTaskQueue();
-        TaskObject currentTask = TaskManager.getTaskFromQueueWithID(current_task_being_shown);
+        currentTask = TaskManager.getTaskFromQueueWithID(current_task_being_shown);
         if (currentTask != null) {
             String taskDetails = formatDateTime(currentTask.getEndDate());
             getSupportActionBar().setTitle(currentTask.getTitle());
@@ -126,11 +123,11 @@ public class CameraActivity extends AppCompatActivity implements ImageAnalysis.A
         } else {
             getSupportActionBar().setTitle("No current tasks");
         }
-
+        
     }
-
+    
     private void displayCurrentTask() {
-        TaskObject currentTask = TaskManager.getNextTask();
+        currentTask = TaskManager.getNextTask();
         current_task_being_shown = 0;
         if (currentTask != null) {
             String taskDetails = formatDateTime(currentTask.getEndDate());
@@ -210,10 +207,14 @@ public class CameraActivity extends AppCompatActivity implements ImageAnalysis.A
             e.printStackTrace();
         }
         if (photoFile != null) {
-            imageCapture.takePicture(new ImageCapture.OutputFileOptions.Builder(photoFile).build(), getExecutor(),
+            File finalPhotoFile = photoFile;
+            imageCapture.takePicture(new ImageCapture.OutputFileOptions.Builder(finalPhotoFile).build(), getExecutor(),
                     new ImageCapture.OnImageSavedCallback() {
                         @Override
                         public void onImageSaved(@NonNull ImageCapture.OutputFileResults outputFileResults) {
+                            String fileName = finalPhotoFile.getName();
+                            Log.i("Info", "photoLink: " + fileName);
+                            currentTask.setPhotoLink(fileName);
                             Toast.makeText(CameraActivity.this, "Photo has been saved", Toast.LENGTH_SHORT).show();
                         }
                         
