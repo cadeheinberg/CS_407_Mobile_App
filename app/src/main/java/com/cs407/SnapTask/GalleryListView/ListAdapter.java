@@ -56,8 +56,14 @@ public class ListAdapter extends BaseAdapter {
         TaskObject currentTask = TaskManager.getTaskByFileName(fileNames.get(position));
         // update task info
         TextView taskInfo = view.findViewById(R.id.taskInfo);
-        String taskInfoText = currentTask.getTitle()  + "\n" + formatDateTime(currentTask.getEndDate());
-        taskInfo.setText(taskInfoText);
+        if(currentTask == null){
+            String taskInfoText = "No Title Found"  + "\n" + "No Time Found";
+            taskInfo.setText(taskInfoText);
+        }
+        else{
+            String taskInfoText = currentTask.getTitle()  + "\n" + formatDateTime(currentTask.getEndDate());
+            taskInfo.setText(taskInfoText);
+        }
         return view;
     }
 

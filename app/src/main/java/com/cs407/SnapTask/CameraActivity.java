@@ -106,20 +106,41 @@ public class CameraActivity extends AppCompatActivity implements ImageAnalysis.A
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         if (item.getItemId() == R.id.camera_next_task_button) {
-            displayNextTask();
+            if(currentTask != null){
+                displayNextTask();
+            }
         }
         return true;
     }
     
     private void displayNextTask() {
+        if(currentTask == null){
+            return;
+        }
         current_task_being_shown = (current_task_being_shown + 1) % TaskManager.getSizeOfTaskQueue();
         currentTask = TaskManager.getTaskFromQueueWithID(current_task_being_shown);
         if (currentTask != null) {
-            String taskDetails = formatDateTime(currentTask.getEndDate());
-            getSupportActionBar().setTitle(currentTask.getTitle());
-            getSupportActionBar().setSubtitle(taskDetails);
+            if(currentTask.isChecked()){
+                boolean found_one_false = false;
+                for(TaskObject task : TaskManager.getTasksList()){
+                    if(task.isChecked() == false){
+                        found_one_false = true;
+                    }
+                }
+                if(found_one_false == false){
+                    // infinite loop will occur if keep searching for unchecked task
+                    // and there isnt one
+                }else{
+                    // keep searching
+                    displayNextTask();
+                }
+            }else{
+                String taskDetails = formatDateTime(currentTask.getEndDate());
+                getSupportActionBar().setTitle(currentTask.getTitle());
+                getSupportActionBar().setSubtitle(taskDetails);
+            }
         } else {
-            getSupportActionBar().setTitle("No current tasks");
+            getSupportActionBar().setTitle("SnapTask");
         }
         
     }
@@ -128,11 +149,15 @@ public class CameraActivity extends AppCompatActivity implements ImageAnalysis.A
         currentTask = TaskManager.getNextTask();
         current_task_being_shown = 0;
         if (currentTask != null) {
-            String taskDetails = formatDateTime(currentTask.getEndDate());
-            getSupportActionBar().setTitle(currentTask.getTitle());
-            getSupportActionBar().setSubtitle(taskDetails);
+            if(currentTask.isChecked()){
+                displayNextTask();
+            }else{
+                String taskDetails = formatDateTime(currentTask.getEndDate());
+                getSupportActionBar().setTitle(currentTask.getTitle());
+                getSupportActionBar().setSubtitle(taskDetails);
+            }
         } else {
-            getSupportActionBar().setTitle("No current tasks");
+            getSupportActionBar().setTitle("SnapTask");
         }
     }
     
@@ -193,7 +218,11 @@ public class CameraActivity extends AppCompatActivity implements ImageAnalysis.A
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.pictureButton) {
-            capturePhoto();
+            if(currentTask == null || getSupportActionBar().getTitle().equals("SnapTask")){
+                Toast.makeText(CameraActivity.this, "No current tasks", Toast.LENGTH_SHORT).show();
+            }else{
+                capturePhoto();
+            }
         }
     }
     
@@ -213,7 +242,9 @@ public class CameraActivity extends AppCompatActivity implements ImageAnalysis.A
                             String fileName = finalPhotoFile.getName();
                             Log.i("Info", "photoLink: " + fileName);
                             currentTask.setPhotoLink(fileName);
+                            currentTask.setChecked(true);
                             Toast.makeText(CameraActivity.this, "Photo has been saved", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(CameraActivity.this, GalleryActivity.class));
                         }
                         
                         @Override
